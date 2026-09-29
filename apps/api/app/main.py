@@ -38,7 +38,14 @@ RANGES = {
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     pool = AsyncConnectionPool(
-        DATABASE_URL, min_size=1, max_size=5, open=False, kwargs={"autocommit": True}
+        DATABASE_URL,
+        min_size=1,
+        max_size=5,
+        open=False,
+        kwargs={"autocommit": True},
+        # Serverless Postgres (Neon) drops idle connections when it scales to zero; check each one
+        # before handing it out so a request never lands on a dead connection.
+        check=AsyncConnectionPool.check_connection,
     )
     await pool.open(wait=True, timeout=30)
     await db.init_schema(pool)

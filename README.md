@@ -33,16 +33,17 @@ browser ──> web (Next.js) ──/backend proxy──> api (FastAPI) ──> 
 | `API_URL` | web, runtime | The API's URL, e.g. `https://disasterintel-api.onrender.com` |
 | `DATABASE_URL` | api, runtime | Postgres connection string. The database needs the PostGIS extension |
 
-Options (all have free tiers):
+Everything here uses plans that are free for good, not trials or free periods that expire.
 
-- **Render:** New > Blueprint, pick this repo. `render.yaml` creates the database and both services.
-  Free services sleep after 15 minutes idle (the first request then takes up to a minute), and the
-  free database expires after 30 days.
+- **Live setup: Render web services + Neon Postgres.** Create a Neon project (PostGIS works out of
+  the box), then in Render: New > Blueprint, connect GitHub, pick this repo, and paste Neon's direct
+  (not pooled) connection string when asked for `DATABASE_URL`. Free Render services sleep after 15
+  minutes idle, so the first visit after that takes up to a minute.
 - **One VM** (Oracle Cloud Always Free, any VPS): `docker compose up -d --build`.
-- **Mix and match:** API and web on Koyeb, Fly.io or Cloud Run, database on Neon or Supabase (both
-  offer PostGIS). Set the three values above.
+- **Mix and match:** API and web on any container host, database on any Postgres with PostGIS. Set
+  the three values above.
 
 The `ci` workflow runs the API tests against PostGIS, then starts the full stack with
-`docker-compose.yml` and checks that real events reach the browser through the proxy.
-When both pass on `main`, it deploys the apps that changed to Render through deploy hooks
-(repo secrets `RENDER_DEPLOY_HOOK_WEB` and `RENDER_DEPLOY_HOOK_API`), so nothing untested goes live.
+`docker-compose.yml` and checks that real events reach the browser through the proxy. Render deploys
+an app only after a push to `main` that touches it passes these checks (`autoDeployTrigger:
+checksPass` in `render.yaml`).
