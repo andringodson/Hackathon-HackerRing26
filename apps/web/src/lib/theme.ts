@@ -4,12 +4,13 @@ export const THEME_STORAGE_KEY = "di-theme";
 
 /**
  * Runs synchronously in <head> (see app/layout.tsx) so the right palette is on <html> before the
- * first paint. Stored choice wins; on a first visit we follow prefers-color-scheme.
+ * first paint. Stored choice wins; otherwise the OLED dark theme, whatever the system prefers
+ * (light is an opt-in from the settings menu).
  * Kept as a string because it is inlined into the document, not bundled.
  */
 export const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem(${JSON.stringify(
   THEME_STORAGE_KEY,
-)});if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
+)});if(t!=="light"&&t!=="dark"){t="dark"}document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
 
 function isTheme(value: unknown): value is Theme {
   return value === "dark" || value === "light";
@@ -21,9 +22,9 @@ export function resolveTheme(): Theme {
     const stored = localStorage.getItem(THEME_STORAGE_KEY);
     if (isTheme(stored)) return stored;
   } catch {
-    // storage blocked: fall through to the system preference
+    // storage blocked: use the default
   }
-  return window.matchMedia?.("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  return "dark";
 }
 
 /** Puts the theme on <html>. Pass persist to remember it as an explicit user choice. */

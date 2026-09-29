@@ -52,9 +52,19 @@ function setVisibility(map: MapLibreMap, ids: string[], visible: boolean) {
 }
 
 /** Call once after the style has loaded. */
+/** OLED black: land is pure black like the UI, water a faint deep blue so coastlines still read. */
+const OLED_PAINT: [layer: string, property: string, value: string][] = [
+  ["background", "background-color", "#000000"],
+  ["water", "fill-color", "#070b12"],
+  ["waterway", "line-color", "#070b12"],
+];
+
 export function applyBasemapTweaks(map: MapLibreMap, layers: Record<LayerId, boolean>) {
   setVisibility(map, ALWAYS_HIDDEN_LAYER_IDS, false);
   setVisibility(map, ROAD_LAYER_IDS, layers.roads);
+  for (const [id, property, value] of OLED_PAINT) {
+    if (map.getLayer(id)) map.setPaintProperty(id, property, value);
+  }
 }
 
 /** Basemap-backed layers respond to the layers popover here. Data layers manage themselves. */

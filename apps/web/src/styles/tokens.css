@@ -4,6 +4,9 @@
  * Dark is the default palette; `data-theme="light"` on <html> switches it. The attribute is
  * set before first paint by the inline script in app/layout.tsx (lib/theme.ts).
  *
+ * Dark is OLED black: surfaces are pure #000 (pixels off), and depth comes from hairline borders
+ * and a faint lift on cards, not from grey panels. Differs from the design doc's navy on purpose.
+ *
  * The --sev-* hexes are duplicated in lib/severity.ts because MapLibre cannot read CSS
  * variables. tokens.test.ts fails if the two drift apart.
  */
@@ -11,16 +14,16 @@
   color-scheme: dark;
 
   /* Surfaces */
-  --bg-map-overlay: rgba(11, 18, 32, 0.82); /* floating bars, used with backdrop-blur */
-  --bg-panel: #0f1729; /* sidebars */
-  --bg-elevated: #16213a; /* cards, hover */
-  --border: #22304f;
+  --bg-map-overlay: rgba(0, 0, 0, 0.72); /* floating bars, used with backdrop-blur */
+  --bg-panel: #000000; /* sidebars */
+  --bg-elevated: #0c0d10; /* cards, hover */
+  --border: #1e2129;
 
   /* Text */
-  --text-primary: #e6ecf7;
-  --text-secondary: #93a1bd;
-  /* ~3.6:1 on --bg-panel, below WCAG AA for body text. Placeholders and disabled states only. */
-  --text-muted: #62708c;
+  --text-primary: #e8ecf2; /* 17.6:1 on black */
+  --text-secondary: #8b93a1; /* 6.8:1 */
+  /* ~3.4:1 on black, below WCAG AA for body text. Placeholders and disabled states only. */
+  --text-muted: #5b6270;
 
   /* Accent */
   --accent: #22d3ee;
@@ -34,7 +37,7 @@
   --sev-info: #3b82f6;
 
   /* Shape and elevation */
-  --shadow-float: 0 4px 24px rgb(0 0 0 / 0.35);
+  --shadow-float: 0 8px 32px rgb(0 0 0 / 0.6);
 
   /* Layout insets: how much of each map edge is covered by a sidebar, rail or the agent drawer.
      AppShell overrides these from the open panels (and zeroes them on phones), so floating UI (top

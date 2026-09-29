@@ -24,10 +24,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   // let the map run under notches and rounded corners; floating UI keeps its own margins
   viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0f1729" },
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-  ],
+  // Browser and phone chrome match the default OLED theme, whatever the system prefers.
+  themeColor: "#000000",
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {

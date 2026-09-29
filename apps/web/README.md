@@ -138,6 +138,9 @@ Recipes:
 
 ## Decisions that differ from the design doc
 
+- **The dark theme is OLED black, and it is the default.** Surfaces are pure `#000` instead of the
+  doc's navy, with depth from hairline borders; the basemap's land is black and water a faint blue.
+  First visits get dark whatever the system prefers; light stays available in settings.
 - **next-intl is pinned to 4.4.0.** Later versions (4.5+) load `@swc/core` at config time, whose native
   loader refused to start on the dev machine (its cache directory inherited a foreign ACL) and needs
   npm's install-script approval. 4.4.0 supports Next 16 without it. Upgrade freely on machines where it
