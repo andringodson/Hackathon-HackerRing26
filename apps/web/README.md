@@ -34,17 +34,6 @@ Try it: click a marker or a feed row (map flies there, detail opens), press `[` 
 switch language (EN, TA, HI) and theme in the top bar, open `/dashboard` for the responder view
 (`A` opens the agent drawer).
 
-## Deploy
-
-See the [root README](../../README.md#deploy) for the whole stack. Web-specific points:
-
-- Every page is server-rendered, so this needs a Node server, not a static host. `Dockerfile` builds
-  a Next.js standalone image that listens on `$PORT` (default 3000).
-- Deployments build with `NEXT_PUBLIC_API_URL=/backend`. The browser then calls this app's own proxy
-  (`src/app/backend/[...path]/route.ts`), which forwards to `API_URL`. `API_URL` is read per request,
-  so the same image can point at any backend without a rebuild, and the API needs no CORS setup.
-- An image built without `NEXT_PUBLIC_API_URL` runs on demo data.
-
 ## What exists
 
 Phase F1 (shell) is done. Slices of F2 and F3 are in so the shell has something to show.
@@ -52,9 +41,6 @@ Phase F1 (shell) is done. Slices of F2 and F3 are in so the shell has something 
 - **Shell:** full-viewport map, floating top bar, left and right sidebars that overlay the map (never
   resize it), left rail when collapsed, map controls, layers popover, status strip, agent drawer
   stub, toast live region, keyboard shortcuts, dark and light themes (no flash), EN/TA/HI.
-- **Boot screen and logo:** `shell/BootScreen` covers the shell until the map has drawn and the
-  first events are in (6 s grace for a waking API, 15 s cap), reporting the real step. The mark in
-  `brand/Logo` (three sources converging on one verified point) is also the tab icon and top bar logo.
 - **Events:** live feed with filters (time range, hazard, severity), severity-coded markers, hover
   sync between list and map, fly-to with sidebar-aware padding, selection dims other markers.
 - **Detail panel:** header (severity, official vs advisory, confidence with source count), Overview
@@ -143,9 +129,9 @@ Recipes:
   and set `available: true`.
 - **Add a detail tab:** add the id to `DETAIL_TABS` in `lib/roles.ts`, a `TabsContent` in
   `EventDetail`, and a `detail.tabs.<id>` message.
-- **Replace the demo data:** run the API (`apps/api`) and set `NEXT_PUBLIC_API_URL` (see
-  `.env.example`). `lib/api/events.ts` calls `GET /api/events` and `GET /api/events/{id}`. The API
-  publishes its OpenAPI schema at `/openapi.json`; the hand-written `types/` can be generated from it.
+- **Replace the demo data:** set `NEXT_PUBLIC_API_URL`. `lib/api/events.ts` calls `GET /api/events`
+  and `GET /api/events/{id}`. Swap the hand-written `types/` for OpenAPI-generated ones when the
+  backend has a schema.
 
 ## Decisions that differ from the design doc
 

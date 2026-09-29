@@ -173,12 +173,5 @@
     "retry": "Try again",
     "notFoundTitle": "Page not found",
     "notFoundBody": "That page does not exist."
-  },
-  "boot": {
-    "label": "Loading DisasterIntel",
-    "map": "Rendering map",
-    "sources": "Syncing live sources",
-    "demo": "Loading sample data",
-    "ready": "Ready"
   }
 }

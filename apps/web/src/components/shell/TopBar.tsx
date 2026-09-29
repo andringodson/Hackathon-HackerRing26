@@ -2,7 +2,6 @@
 
 import { Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { LogoMark } from "@/components/brand/Logo";
 import { LanguageMenu } from "@/components/shell/LanguageMenu";
 import { LocationSearch } from "@/components/shell/LocationSearch";
 import { useRole } from "@/components/shell/RoleProvider";
@@ -35,10 +34,7 @@ export function TopBar() {
       )}
     >
       <IconButton label={t("toggleEvents")} icon={Menu} onClick={toggleLeft} />
-      <span className="hidden items-center gap-2 px-1 text-sm font-semibold sm:flex">
-        <LogoMark className="size-5 text-primary" />
-        {tApp("name")}
-      </span>
+      <span className="hidden px-1 text-sm font-semibold sm:inline">{tApp("name")}</span>
 
       <LocationSearch />
 
