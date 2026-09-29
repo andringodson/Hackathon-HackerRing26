@@ -53,6 +53,9 @@ Phase F1 (shell) is done. Slices of F2 and F3 are in so the shell has something 
   events, places anywhere via OpenStreetMap Nominatim (`lib/geocode.ts`: debounced 400 ms,
   cached, credited), and actions (panels, layers, theme, time range). Arrow keys, Enter, Esc.
 - **Coordinate readout** in the status strip: latitude, longitude and zoom under the pointer.
+- **Critical toasts** (`shell/ToastCenter`, `store/toast.store`): a new critical event anywhere,
+  whatever the filters, raises one announced toast with View and Dismiss (15 s, at most 3). Events
+  already there on load stay quiet.
 - **Events:** live feed with filters (time range, hazard, severity), hover sync between list and
   map, fly-to with sidebar-aware padding.
 - **Markers** (`map/layers/EventsLayer`, `lib/map/markers`): one silhouette per hazard (quake disc
@@ -74,7 +77,7 @@ Stubs are typed, listed here, and marked `TODO(Fn)` in the code. Phases are from
 |---|---|---|
 | `map/layers/ForecastLayer`, `TimeSlider`, `detail/tabs/ForecastTab` | F4 | Time slider already appears when the Forecast layer is on |
 | `map/layers/PopulationLayer`, `ResourcesLayer`, `detail/tabs/ResourcesTab` | F3 | |
-| WebSocket updates, toasts (`ToastCenter`), stale-data banner | F4 | Feed polls every 30 s for now |
+| WebSocket updates, stale-data banner | F4 | The feed polls every 30 s; critical toasts (`ToastCenter`) work from polling |
 | `report/ReportSheet`, `LocationPicker`, `/report` | F5 | |
 | PWA, offline, low-bandwidth mode | F5 | |
 | `agents/AgentGraph`, `LogStream`, `detail/tabs/AlertTab`, `TraceTab`, auth, `/login`, `/admin/*` | F6 | **`/dashboard` has no auth yet** |

@@ -217,5 +217,11 @@
       "themeDark": "Switch to dark theme",
       "range": "Show last {range}"
     }
+  },
+  "toast": {
+    "region": "Alerts",
+    "newCritical": "New critical event",
+    "view": "View",
+    "dismiss": "Dismiss"
   }
 }
