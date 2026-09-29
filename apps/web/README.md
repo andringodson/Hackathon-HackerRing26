@@ -44,6 +44,9 @@ Phase F1 (shell) is done. Slices of F2 and F3 are in so the shell has something 
 - **Boot screen and logo:** `shell/BootScreen` covers the shell until the map has drawn and the
   first events are in (6 s grace for a waking API, 15 s cap), reporting the real step. The mark in
   `brand/Logo` (three sources converging on one verified point) is also the tab icon and top bar logo.
+- **Live cursor:** `shell/LiveCursor` replaces the mouse pointer with the logo's arcs orbiting the
+  hotspot and a radar ping; it locks on over clickable things and gives way to the I-beam in text
+  fields. Mouse and pen only; reduced motion stops the spin and ping.
 - **Events:** live feed with filters (time range, hazard, severity), severity-coded markers, hover
   sync between list and map, fly-to with sidebar-aware padding, selection dims other markers.
 - **Detail panel:** header (severity, official vs advisory, confidence with source count), Overview

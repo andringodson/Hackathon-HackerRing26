@@ -6,6 +6,7 @@ import { getLocale } from "next-intl/server";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/jetbrains-mono";
 import "@/styles/globals.css";
+import { LiveCursor } from "@/components/shell/LiveCursor";
 import { Providers } from "@/components/shell/Providers";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 
@@ -42,6 +43,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <NextIntlClientProvider>
           <Providers>{children}</Providers>
         </NextIntlClientProvider>
+        <LiveCursor />
       </body>
     </html>
   );

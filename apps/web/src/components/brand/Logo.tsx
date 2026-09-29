@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
  * Arcs span 90 degrees on a radius-11 circle, with 30-degree gaps centred at the top,
  * lower right and lower left.
  */
-const ARCS = [
+export const LOGO_ARCS = [
   "M18.85 5.38A11 11 0 0 1 26.63 18.85",
   "M23.78 23.78A11 11 0 0 1 8.22 23.78",
   "M5.38 18.85A11 11 0 0 1 13.15 5.38",
@@ -37,7 +37,7 @@ export function LogoMark({ className, animated = false }: LogoMarkProps) {
           strokeWidth={2.5}
           strokeLinecap="round"
         >
-          {ARCS.map((d) => (
+          {LOGO_ARCS.map((d) => (
             <path key={d} d={d} pathLength={1} />
           ))}
         </g>
