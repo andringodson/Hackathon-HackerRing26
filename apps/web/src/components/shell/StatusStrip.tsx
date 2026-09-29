@@ -62,7 +62,8 @@ export function StatusStrip() {
   );
 
   return (
-    <div className="pointer-events-none fixed right-[calc(var(--inset-right)+56px)] bottom-[calc(var(--inset-bottom)+12px)] left-[calc(var(--inset-left)+12px)] z-10 flex items-center justify-between gap-2 text-xs transition-[left,right,bottom] duration-200 ease-out">
+    // A footer, so the counts and freshness sit in a landmark screen readers can jump to.
+    <footer className="pointer-events-none fixed right-[calc(var(--inset-right)+56px)] bottom-[calc(var(--inset-bottom)+12px)] left-[calc(var(--inset-left)+12px)] z-10 flex items-center justify-between gap-2 text-xs transition-[left,right,bottom] duration-200 ease-out">
       <p className={cn(PILL, "numeric gap-3 max-sm:gap-2")}>
         <span className="flex items-center gap-1.5">
           <SeverityIcon severity="critical" className="size-3.5" />
@@ -88,7 +89,7 @@ export function StatusStrip() {
           pill
         )}
       </div>
-    </div>
+    </footer>
   );
 }
 
