@@ -22,7 +22,9 @@
     "filters": "Filters",
     "savedAreas": "Saved areas",
     "collapse": "Collapse panel",
-    "expand": "Expand panel"
+    "expand": "Expand panel",
+    "sheetExpand": "Expand panel to full height",
+    "sheetShrink": "Shrink panel to half height"
   },
   "filters": {
     "timeRange": "Time range",

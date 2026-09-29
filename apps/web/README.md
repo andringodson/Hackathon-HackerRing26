@@ -81,7 +81,7 @@ Stubs are typed, listed here, and marked `TODO(Fn)` in the code. Phases are from
 | `report/ReportSheet`, `LocationPicker`, `/report` | F5 | |
 | PWA, offline, low-bandwidth mode | F5 | |
 | `agents/AgentGraph`, `LogStream`, `detail/tabs/AlertTab`, `TraceTab`, auth, `/login`, `/admin/*` | F6 | **`/dashboard` has no auth yet** |
-| `sidebar/BottomSheet` (draggable snap points), `←` `→` between events, Playwright | F7 | |
+| `←` `→` between events, Playwright end-to-end tests | F7 | |
 | URL state for layers, forecast time and viewport (`?layers=&t=&lat=&lng=&z=`) | F2 | The selected event is wired (`?event=`, `hooks/useSelectionUrl.ts`) |
 | Markers: dashed outline for unverified events | F6 | Unverified events are drawn faint for now; they only exist once there is a verification pipeline |
 | Virtualized feed, "Load more" | F2 | |
@@ -101,7 +101,7 @@ src/
 ├── app/                  Routes. page.tsx and dashboard/page.tsx render <AppShell />
 ├── components/
 │   ├── shell/            AppShell, TopBar, StatusStrip, ToastCenter, menus, providers
-│   ├── sidebar/          Sidebar (generic panel + rail), Left/RightSidebar, BottomSheet stub
+│   ├── sidebar/          Sidebar (panel + rail; a draggable bottom sheet on phones), Left/RightSidebar
 │   ├── map/              MapCanvas, storeSync (the adapter), controls, layers/
 │   ├── events/           LiveFeed, EventRow, FilterBar, SeverityBadge, ConfidenceBar
 │   ├── detail/           EventDetail, EventHeader, tabs/

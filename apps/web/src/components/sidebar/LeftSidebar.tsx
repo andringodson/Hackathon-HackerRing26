@@ -29,6 +29,7 @@ export function LeftSidebar() {
       open={open}
       width={LEFT_WIDTH}
       label={t("events")}
+      onDismiss={() => setOpen(false)}
       rail={
         <SidebarRail side="left" expandLabel={t("expand")} onExpand={toggle}>
           <span className="relative">

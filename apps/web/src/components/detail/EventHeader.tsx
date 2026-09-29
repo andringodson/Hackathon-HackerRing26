@@ -87,7 +87,7 @@ export function EventHeader({ event }: { event: DisasterEvent }) {
         reasoning={event.confidenceReasoning}
       />
 
-      <div className="flex gap-1.5">
+      <div className="flex flex-wrap gap-1.5">
         <CopyAction icon={Link2} label={t("actions.copyLink")} value={() => eventLink(event.id)} />
         <CopyAction
           icon={Crosshair}
@@ -106,7 +106,7 @@ export function EventHeader({ event }: { event: DisasterEvent }) {
 }
 
 const ACTION =
-  "inline-flex h-7 items-center gap-1.5 rounded-md border px-2.5 text-xs font-medium text-muted-foreground transition-colors hover:border-muted-foreground/40 hover:text-foreground max-md:h-10";
+  "inline-flex h-7 items-center whitespace-nowrap gap-1.5 rounded-md border px-2.5 text-xs font-medium text-muted-foreground transition-colors hover:border-muted-foreground/40 hover:text-foreground max-md:h-10";
 
 /** A link that opens the app with this event selected (see hooks/useSelectionUrl.ts). */
 function eventLink(id: string) {

@@ -42,9 +42,13 @@ describe("computeInsets", () => {
     expect(computeInsets({ ...closed, agentDrawerOpen: true }, 1000).bottom).toBe(300);
   });
 
-  it("covers nothing on phones, where panels are sheets", () => {
-    expect(
-      computeInsets({ ...closed, leftOpen: true, rightOpen: true, layoutMode: "mobile" }, 800),
-    ).toEqual({ left: 0, right: 0, bottom: 0 });
+  it("on phones, an open panel is a bottom sheet over the lower half", () => {
+    const phone = { ...closed, layoutMode: "mobile" as const };
+    expect(computeInsets({ ...phone, rightOpen: true }, 800)).toEqual({
+      left: 0,
+      right: 0,
+      bottom: 400,
+    });
+    expect(computeInsets(phone, 800)).toEqual({ left: 0, right: 0, bottom: 0 });
   });
 });

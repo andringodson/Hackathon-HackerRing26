@@ -26,7 +26,13 @@ export function RightSidebar() {
   const { data: event, isPending, isError, refetch } = useEvent(selectedId);
 
   return (
-    <Sidebar side="right" open={open} width={RIGHT_WIDTH} label={t("label")}>
+    <Sidebar
+      side="right"
+      open={open}
+      width={RIGHT_WIDTH}
+      label={t("label")}
+      onDismiss={clearSelection}
+    >
       {selectedId !== null && event ? (
         <EventDetail event={event} />
       ) : (
