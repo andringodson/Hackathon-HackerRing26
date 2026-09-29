@@ -44,3 +44,5 @@ Options (all have free tiers):
 
 The `ci` workflow runs the API tests against PostGIS, then starts the full stack with
 `docker-compose.yml` and checks that real events reach the browser through the proxy.
+When both pass on `main`, it deploys the apps that changed to Render through deploy hooks
+(repo secrets `RENDER_DEPLOY_HOOK_WEB` and `RENDER_DEPLOY_HOOK_API`), so nothing untested goes live.

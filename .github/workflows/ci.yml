@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   pull_request:
+  # Run by hand (Actions tab or `gh workflow run ci`) to test and redeploy both apps.
+  workflow_dispatch:
 
 jobs:
   api-test:
@@ -59,3 +61,38 @@ jobs:
       - name: Logs
         if: always()
         run: docker compose logs --no-color
+
+  # Deploys to Render only after both jobs pass, and only the apps that changed. Uses deploy hooks
+  # (Render: service > Settings > Deploy Hook) stored as repo secrets RENDER_DEPLOY_HOOK_WEB and
+  # RENDER_DEPLOY_HOOK_API, so it works without Render's GitHub app. A missing secret is skipped.
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: [api-test, stack]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Trigger Render deploys for changed apps
+        env:
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          WEB_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_WEB }}
+          API_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_API }}
+        run: |
+          if [ "$EVENT" != push ]; then
+            # Run by hand: deploy both.
+            changed=$'apps/web/\napps/api/'
+          elif git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            changed=$(git diff --name-only "$BEFORE" HEAD)
+          else
+            # First push of the branch or rewritten history: deploy both.
+            changed=$'apps/web/\napps/api/'
+          fi
+          deploy() { # name, hook, path prefix
+            if ! grep -q "^$3" <<<"$changed"; then echo "$1: no changes"; return; fi
+            if [ -z "$2" ]; then echo "::warning::$1 changed but its deploy hook secret is not set"; return; fi
+            curl -fsS -X POST "$2" > /dev/null && echo "$1: deploy triggered"
+          }
+          deploy web "$WEB_HOOK" apps/web/
+          deploy api "$API_HOOK" apps/api/
