@@ -66,9 +66,9 @@
     "empty": "Select an event on the map or in the list to see details.",
     "close": "Close event detail",
     "confidence": "Confidence",
-    "sourcesVerified": "{count, plural, one {# source verified} other {# sources verified}}",
+    "sourcesVerified": "{count, plural, one {# source} other {# sources}}",
     "official": "Official · {authority}",
-    "advisory": "Advisory · Verified by DisasterIntel",
+    "advisory": "Advisory",
     "unverified": "Unverified",
     "loadError": "Can't load this event.",
     "tabs": {
@@ -92,7 +92,22 @@
       "stale": "This source has stopped updating",
       "none": "No source details yet."
     },
-    "notBuilt": "This tab is not built yet. It arrives in phase {phase}."
+    "notBuilt": "This tab is not built yet. It arrives in phase {phase}.",
+    "updatedAgo": "Updated {time}",
+    "actions": {
+      "copyLink": "Copy link",
+      "copyCoordinates": "Copy coordinates",
+      "openSource": "Open source",
+      "copied": "Copied"
+    },
+    "facts": {
+      "title": "Key facts",
+      "magnitude": "Magnitude",
+      "occurred": "Occurred",
+      "started": "Started",
+      "updated": "Updated",
+      "location": "Location"
+    }
   },
   "map": {
     "label": "Disaster map",

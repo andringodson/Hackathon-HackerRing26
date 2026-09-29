@@ -66,9 +66,9 @@
     "empty": "विवरण देखने के लिए मानचित्र या सूची में कोई घटना चुनें।",
     "close": "घटना विवरण बंद करें",
     "confidence": "विश्वसनीयता",
-    "sourcesVerified": "{count, plural, one {# स्रोत से पुष्टि हुई} other {# स्रोतों से पुष्टि हुई}}",
+    "sourcesVerified": "{count, plural, one {# स्रोत} other {# स्रोत}}",
     "official": "आधिकारिक · {authority}",
-    "advisory": "परामर्श · DisasterIntel द्वारा सत्यापित",
+    "advisory": "परामर्श",
     "unverified": "असत्यापित",
     "loadError": "यह घटना लोड नहीं हो सकी।",
     "tabs": {
@@ -92,7 +92,22 @@
       "stale": "इस स्रोत ने अपडेट होना बंद कर दिया है",
       "none": "अभी स्रोत का विवरण उपलब्ध नहीं है।"
     },
-    "notBuilt": "यह टैब अभी बना नहीं है। यह {phase} चरण में आएगा।"
+    "notBuilt": "यह टैब अभी बना नहीं है। यह {phase} चरण में आएगा।",
+    "updatedAgo": "अपडेट {time}",
+    "actions": {
+      "copyLink": "लिंक कॉपी करें",
+      "copyCoordinates": "निर्देशांक कॉपी करें",
+      "openSource": "स्रोत खोलें",
+      "copied": "कॉपी हो गया"
+    },
+    "facts": {
+      "title": "मुख्य तथ्य",
+      "magnitude": "तीव्रता",
+      "occurred": "घटित",
+      "started": "शुरू",
+      "updated": "अपडेट",
+      "location": "स्थान"
+    }
   },
   "map": {
     "label": "आपदा मानचित्र",

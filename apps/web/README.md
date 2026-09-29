@@ -76,7 +76,7 @@ Stubs are typed, listed here, and marked `TODO(Fn)` in the code. Phases are from
 | PWA, offline, low-bandwidth mode | F5 | |
 | `agents/AgentGraph`, `LogStream`, `detail/tabs/AlertTab`, `TraceTab`, auth, `/login`, `/admin/*` | F6 | **`/dashboard` has no auth yet** |
 | `sidebar/BottomSheet` (draggable snap points), `←` `→` between events, Playwright | F7 | |
-| URL state (`lib/url-state.ts` parses and serializes, but is not wired to the address bar) | F2 | |
+| URL state for layers, forecast time and viewport (`?layers=&t=&lat=&lng=&z=`) | F2 | The selected event is wired (`?event=`, `hooks/useSelectionUrl.ts`) |
 | Markers: dashed outline for unverified events | F6 | Unverified events are drawn faint for now; they only exist once there is a verification pipeline |
 | Virtualized feed, "Load more" | F2 | |
 

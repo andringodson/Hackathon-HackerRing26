@@ -23,7 +23,7 @@ export function ConfidenceBar({
     <div className="space-y-1">
       <div className="flex items-baseline justify-between text-xs">
         <span className="text-muted-foreground">{t("confidence")}</span>
-        <span className="font-medium tabular-nums">{percent}</span>
+        <span className="numeric font-medium">{percent}</span>
       </div>
       <div
         role="meter"

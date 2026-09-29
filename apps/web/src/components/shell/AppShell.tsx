@@ -16,6 +16,7 @@ import { LeftSidebar } from "@/components/sidebar/LeftSidebar";
 import { RightSidebar } from "@/components/sidebar/RightSidebar";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { useLayoutModeSync } from "@/hooks/useLayoutModeSync";
+import { useSelectionUrl } from "@/hooks/useSelectionUrl";
 import { useThemeSync } from "@/hooks/useThemeSync";
 import { DRAWER_HEIGHT_RATIO, computeInsets } from "@/lib/layout";
 import { canSeeAgentTools, type Role } from "@/lib/roles";
@@ -48,6 +49,7 @@ function Shell() {
   useThemeSync();
   useLayoutModeSync();
   useKeyboardShortcuts();
+  useSelectionUrl();
 
   // Restore the remembered sidebar state after mount. Doing it later than the first render keeps
   // the server HTML and the first client render identical.
