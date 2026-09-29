@@ -54,22 +54,35 @@ export function ConfidenceBar({
   );
 }
 
-/** Compact confidence for list rows: the fill level says high, medium or low, and the label has the number. */
-export function ConfidenceDot({ value }: { value: number }) {
+/** Compact confidence for list rows: a small ring filled to the confidence, and the percentage. */
+export function ConfidenceRing({ value, className }: { value: number; className?: string }) {
   const t = useTranslations("feed");
   const locale = useLocale();
-  const label = t("confidence", { value: formatPercent(value, locale) });
-  const level = value >= 0.85 ? "high" : value >= 0.6 ? "medium" : "low";
+  const percent = formatPercent(value, locale);
+  const label = t("confidence", { value: percent });
   return (
     <span
       role="img"
       aria-label={label}
       title={label}
-      className={cn(
-        "mt-1.5 inline-block size-2.5 shrink-0 rounded-full border border-primary",
-        level === "high" && "bg-primary",
-        level === "medium" && "bg-primary/40",
-      )}
-    />
+      className={cn("inline-flex shrink-0 items-center gap-1", className)}
+    >
+      <svg viewBox="0 0 16 16" aria-hidden className="size-3 -rotate-90">
+        <circle cx={8} cy={8} r={6} fill="none" strokeWidth={2.5} className="stroke-border" />
+        <circle
+          cx={8}
+          cy={8}
+          r={6}
+          fill="none"
+          strokeWidth={2.5}
+          pathLength={100}
+          strokeDasharray={`${Math.round(value * 100)} 100`}
+          className="stroke-primary"
+        />
+      </svg>
+      <span aria-hidden className="numeric text-[11px]">
+        {percent}
+      </span>
+    </span>
   );
 }

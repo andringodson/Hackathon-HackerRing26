@@ -6,23 +6,32 @@ import { fetchEvents, eventKeys } from "@/lib/api/events";
 import { USE_MOCKS } from "@/lib/env";
 import type { Bbox } from "@/lib/geo";
 import { canSeeUnverified } from "@/lib/roles";
+import type { Severity } from "@/lib/severity";
 import { useRole } from "@/components/shell/RoleProvider";
 import { useFiltersStore } from "@/store/filters.store";
 import type { EventFilters } from "@/types/event";
 
 const POLL_INTERVAL_MS = 30_000;
 
+/** Stable, so the query key does not change on every render. */
+const NO_SEVERITIES: Severity[] = [];
+
 /**
  * Events for the current filters, newest first. Feeds the left sidebar and the status strip.
- * Pass a bbox to limit to an area (see useViewportEvents).
+ * Pass a bbox to limit to an area (see useViewportEvents). Pass allSeverities to ignore the severity
+ * filter, for counts that show what each severity toggle would add.
  *
  * Polls every 30 s for now. TODO(F4): push updates over the WebSocket into this query cache, batched
  * every 500 ms, and keep polling only as the fallback.
  */
-export function useLiveEvents({ bbox = null }: { bbox?: Bbox | null } = {}) {
+export function useLiveEvents({
+  bbox = null,
+  allSeverities = false,
+}: { bbox?: Bbox | null; allSeverities?: boolean } = {}) {
   const role = useRole();
   const hazards = useFiltersStore((s) => s.hazards);
-  const severities = useFiltersStore((s) => s.severities);
+  const selectedSeverities = useFiltersStore((s) => s.severities);
+  const severities = allSeverities ? NO_SEVERITIES : selectedSeverities;
   const timeRange = useFiltersStore((s) => s.timeRange);
   const includeUnverified = canSeeUnverified(role);
 

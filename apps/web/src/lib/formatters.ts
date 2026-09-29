@@ -24,6 +24,28 @@ export function formatRelativeTime(
   return "";
 }
 
+/**
+ * Compact age for dense lists: "now", "31m", "5h", "2d" (localized unit symbols). Never in the
+ * future: a timestamp slightly ahead of a stale `now` reads as "now", not "in 2 sec."
+ */
+export function formatAge(value: Date | string | number, locale: string, now: number = Date.now()) {
+  const age = Math.max(0, now - new Date(value).getTime());
+  const unit: [Intl.NumberFormatOptions["unit"], number] | null =
+    age >= DAY
+      ? ["day", DAY]
+      : age >= HOUR
+        ? ["hour", HOUR]
+        : age >= MINUTE
+          ? ["minute", MINUTE]
+          : null;
+  if (!unit) return new Intl.RelativeTimeFormat(locale, { numeric: "auto" }).format(0, "second");
+  return new Intl.NumberFormat(locale, {
+    style: "unit",
+    unit: unit[0],
+    unitDisplay: "narrow",
+  }).format(Math.floor(age / unit[1]));
+}
+
 export function formatAbsoluteTime(value: Date | string | number, locale: string) {
   return new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }).format(
     new Date(value),

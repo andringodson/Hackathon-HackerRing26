@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   formatAbsoluteTime,
+  formatAge,
   formatCompactNumber,
   formatPercent,
   formatRelativeTime,
@@ -9,6 +10,23 @@ import {
 const NOW = Date.parse("2026-09-29T10:00:00Z");
 const MIN = 60_000;
 const HOUR = 3_600_000;
+
+describe("formatAge", () => {
+  it("is compact, and floors to the largest whole unit", () => {
+    expect(formatAge(NOW - 31 * MIN, "en", NOW)).toBe("31m");
+    expect(formatAge(NOW - 5.9 * HOUR, "en", NOW)).toBe("5h");
+    expect(formatAge(NOW - 50 * HOUR, "en", NOW)).toBe("2d");
+  });
+
+  it("says now for under a minute, and for times slightly ahead of a stale clock", () => {
+    expect(formatAge(NOW - 20_000, "en", NOW)).toBe("now");
+    expect(formatAge(NOW + 2_000, "en", NOW)).toBe("now");
+  });
+
+  it("localizes the unit", () => {
+    expect(formatAge(NOW - 5 * HOUR, "hi", NOW)).not.toBe("5h");
+  });
+});
 
 describe("formatRelativeTime", () => {
   it("says now for the same instant", () => {

@@ -1,11 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { countBySeverity, filterEvents, sortNewestFirst } from "@/lib/events";
+import { activityTime, countBySeverity, filterEvents, sortNewestFirst } from "@/lib/events";
 import { createMockEvents } from "@/lib/mock/events";
 import type { EventFilters } from "@/types/event";
 
 const NOW = Date.parse("2026-09-29T10:00:00Z");
 const events = createMockEvents(NOW);
-const base: EventFilters = { hazards: [], severities: [], timeRange: "7d", includeUnverified: true };
+const base: EventFilters = {
+  hazards: [],
+  severities: [],
+  timeRange: "7d",
+  includeUnverified: true,
+};
 const ids = (list: typeof events) => list.map((e) => e.id);
 
 describe("filterEvents", () => {
@@ -61,12 +66,35 @@ describe("filterEvents", () => {
 });
 
 describe("sortNewestFirst", () => {
-  it("orders by last update, newest first, without mutating the input", () => {
+  it("orders by activity, newest first, without mutating the input", () => {
     const shuffled = [...events].reverse();
     const sorted = sortNewestFirst(shuffled);
     expect(sorted[0].id).toBe("demo-quake-assam");
     expect(sorted.at(-1)?.id).toBe("demo-quake-nepal");
     expect(shuffled[0].id).toBe("demo-quake-nepal");
+  });
+});
+
+describe("activityTime", () => {
+  const quake = events.find((e) => e.type === "earthquake")!;
+  const flood = events.find((e) => e.type === "flood")!;
+
+  it("is when a quake happened, even if it was revised later", () => {
+    const revised = { ...quake, updatedAt: new Date(NOW).toISOString() };
+    expect(activityTime(revised)).toBe(Date.parse(quake.occurredAt));
+    expect(
+      ids(
+        filterEvents(
+          [{ ...revised, occurredAt: new Date(NOW - 3 * 86_400_000).toISOString() }],
+          { ...base, timeRange: "24h" },
+          NOW,
+        ),
+      ),
+    ).toEqual([]);
+  });
+
+  it("is the last update for an ongoing flood", () => {
+    expect(activityTime(flood)).toBe(Date.parse(flood.updatedAt));
   });
 });
 

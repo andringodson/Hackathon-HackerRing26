@@ -56,7 +56,10 @@
     "checkedAt": "Last checked {time}",
     "error": "Can't reach the server. Showing last known data.",
     "retry": "Retry",
-    "confidence": "Confidence {value}"
+    "confidence": "Confidence {value}",
+    "updated": "Updated",
+    "sampleData": "Sample data",
+    "widen": "Show last 7 days"
   },
   "detail": {
     "label": "Event detail",

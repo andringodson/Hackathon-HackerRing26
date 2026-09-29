@@ -397,6 +397,31 @@ html.live-cursor
   }
 }
 
+/* Events feed: a row that arrived on a refresh fades from cyan over 3 s (design doc 5.4). */
+.feed-row[data-new] > button {
+  animation: row-new 3s ease-out 1;
+}
+
+@keyframes row-new {
+  from {
+    background-color: color-mix(in oklab, var(--accent) 16%, transparent);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+/* A live-data dot breathes; stale or demo dots stay still. */
+.live-dot {
+  animation: live-dot 2.4s ease-in-out infinite;
+}
+
+@keyframes live-dot {
+  50% {
+    opacity: 0.35;
+  }
+}
+
 /* Motion only signals change, and goes away for people who ask for less of it. */
 @media (prefers-reduced-motion: reduce) {
   *,
