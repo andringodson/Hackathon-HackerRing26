@@ -34,6 +34,33 @@ Try it: click a marker or a feed row (map flies there, detail opens), press `[` 
 switch language (EN, TA, HI) and theme in the top bar, open `/dashboard` for the responder view
 (`A` opens the agent drawer).
 
+## Deploy
+
+The app is server-rendered (every page is dynamic), so it needs a Node server, not a static host.
+It ships as one Docker image (`Dockerfile`, Next.js standalone output) that runs on any
+container host. No host-specific code.
+
+```bash
+docker build -t disasterintel-web \
+  --build-arg NEXT_PUBLIC_API_URL=https://your-api.example.com .   # omit for demo data
+docker run -p 3000:3000 disasterintel-web
+```
+
+`NEXT_PUBLIC_*` values are baked in at build time, so changing the API URL means rebuilding. The
+container listens on `$PORT` (default 3000). The `web image` GitHub Action builds and smoke-tests the
+image on every push that touches `apps/web`.
+
+| Host | Free tier | How |
+|---|---|---|
+| Render | Yes, sleeps after 15 min idle | New > Blueprint, pick this repo (`render.yaml` at the root) |
+| Koyeb | One free service | New service > GitHub, builder Dockerfile, work directory `apps/web` |
+| Google Cloud Run | Monthly free quota | `gcloud run deploy --source apps/web` |
+| Any VM (Oracle Cloud Always Free) | Yes | `docker build` and `docker run` as above |
+
+The FastAPI backend, Postgres/PostGIS and Redis (brief section 6.4) deploy the same way, as their own
+containers or managed services. Point `NEXT_PUBLIC_API_URL` at the API's public URL and allow the
+site's origin in the API's CORS settings.
+
 ## What exists
 
 Phase F1 (shell) is done. Slices of F2 and F3 are in so the shell has something to show.
