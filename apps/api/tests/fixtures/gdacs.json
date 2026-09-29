@@ -1,0 +1,286 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "bbox": [
+        -46.2,
+        35.2,
+        -46.2,
+        35.2
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -46.2,
+          35.2
+        ]
+      },
+      "properties": {
+        "eventtype": "TC",
+        "eventid": 1001330,
+        "episodeid": 4,
+        "eventname": "HANNA-26",
+        "glide": "",
+        "name": "Tropical Cyclone HANNA-26",
+        "description": "Tropical Cyclone HANNA-26",
+        "url": {
+          "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001330&episodeid=4",
+          "report": "https://www.gdacs.org/report.aspx?eventid=1001330&episodeid=4&eventtype=TC",
+          "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001330"
+        },
+        "alertlevel": "Green",
+        "alertscore": 1,
+        "episodealertlevel": "Green",
+        "episodealertscore": 1.0,
+        "istemporary": "false",
+        "iscurrent": "true",
+        "country": "",
+        "fromdate": "2026-09-28T15:00:00",
+        "todate": "2026-09-29T09:00:00",
+        "datemodified": "2026-09-29T12:55:44",
+        "iso3": "",
+        "source": "NOAA",
+        "sourceid": "",
+        "polygonlabel": "Centroid",
+        "Class": "Point_Centroid",
+        "countryonland": "",
+        "affectedcountries": [],
+        "severitydata": {
+          "severity": 83.3328,
+          "severitytext": "Tropical Storm (maximum wind speed of 83 km/h)",
+          "severityunit": "km/h"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "bbox": [
+        -164.3,
+        20.0,
+        -164.3,
+        20.0
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -164.3,
+          20.0
+        ]
+      },
+      "properties": {
+        "eventtype": "TC",
+        "eventid": 1001321,
+        "episodeid": 35,
+        "eventname": "NOLO-26",
+        "glide": "",
+        "name": "Tropical Cyclone NOLO-26",
+        "description": "Tropical Cyclone NOLO-26",
+        "url": {
+          "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=TC&eventid=1001321&episodeid=35",
+          "report": "https://www.gdacs.org/report.aspx?eventid=1001321&episodeid=35&eventtype=TC",
+          "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=TC&eventid=1001321"
+        },
+        "alertlevel": "Green",
+        "alertscore": 1,
+        "episodealertlevel": "Green",
+        "episodealertscore": 1.0,
+        "istemporary": "false",
+        "iscurrent": "true",
+        "country": "United States",
+        "fromdate": "2026-09-13T21:00:00",
+        "todate": "2026-09-29T09:00:00",
+        "datemodified": "2026-09-29T10:22:15",
+        "iso3": "",
+        "source": "NOAA",
+        "sourceid": "",
+        "polygonlabel": "Centroid",
+        "Class": "Point_Centroid",
+        "countryonland": "",
+        "affectedcountries": [
+          {
+            "iso2": "US",
+            "iso3": "USA",
+            "countryname": "United States"
+          }
+        ],
+        "severitydata": {
+          "severity": 249.9984,
+          "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 250 km/h)",
+          "severityunit": "km/h"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "bbox": [
+        29.0509,
+        41.0707,
+        29.0509,
+        41.0707
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          29.0509,
+          41.0707
+        ]
+      },
+      "properties": {
+        "eventtype": "FL",
+        "eventid": 1104183,
+        "episodeid": 3,
+        "eventname": "",
+        "glide": "",
+        "name": "Flood in Türkiye",
+        "description": "Flood in Türkiye",
+        "url": {
+          "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=FL&eventid=1104183&episodeid=3",
+          "report": "https://www.gdacs.org/report.aspx?eventid=1104183&episodeid=3&eventtype=FL",
+          "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=FL&eventid=1104183"
+        },
+        "alertlevel": "Green",
+        "alertscore": 1,
+        "episodealertlevel": "Green",
+        "episodealertscore": 0.5,
+        "istemporary": "false",
+        "iscurrent": "true",
+        "country": "Türkiye",
+        "fromdate": "2026-09-18T01:00:00",
+        "todate": "2026-09-29T01:00:00",
+        "datemodified": "2026-09-29T11:05:46",
+        "iso3": "TUR",
+        "source": "GLOFAS",
+        "sourceid": "",
+        "polygonlabel": "Centroid",
+        "Class": "Point_Centroid",
+        "affectedcountries": [
+          {
+            "iso2": "TR",
+            "iso3": "TUR",
+            "countryname": "Türkiye"
+          }
+        ],
+        "severitydata": {
+          "severity": 0.0,
+          "severitytext": "Magnitude 0 ",
+          "severityunit": ""
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "bbox": [
+        -61.468,
+        -23.6274,
+        -61.468,
+        -23.6274
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -61.468,
+          -23.6274
+        ]
+      },
+      "properties": {
+        "eventtype": "WF",
+        "eventid": 1032477,
+        "episodeid": 1,
+        "eventname": "",
+        "glide": "",
+        "name": "Forest fires in Argentina",
+        "description": "Forest fires in Argentina",
+        "url": {
+          "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1032477&episodeid=1",
+          "report": "https://www.gdacs.org/report.aspx?eventid=1032477&episodeid=1&eventtype=WF",
+          "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1032477"
+        },
+        "alertlevel": "Green",
+        "alertscore": 1,
+        "episodealertlevel": "Green",
+        "episodealertscore": 0.5,
+        "istemporary": "false",
+        "iscurrent": "true",
+        "country": "Argentina",
+        "fromdate": "2026-09-20T00:00:00",
+        "todate": "2026-09-29T00:00:00",
+        "datemodified": "2026-09-29T11:07:30",
+        "iso3": "ARG",
+        "source": "GWIS",
+        "sourceid": "",
+        "polygonlabel": "Centroid",
+        "Class": "Point_Centroid",
+        "affectedcountries": [
+          {
+            "iso2": "AR",
+            "iso3": "ARG",
+            "countryname": "Argentina"
+          }
+        ],
+        "severitydata": {
+          "severity": 5502.0,
+          "severitytext": "Green impact for forestfire in 5502 ha",
+          "severityunit": "ha"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "bbox": [
+        -174.0813,
+        -20.6773,
+        -174.0813,
+        -20.6773
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -174.0813,
+          -20.6773
+        ]
+      },
+      "properties": {
+        "eventtype": "EQ",
+        "eventid": 1568610,
+        "episodeid": 1736704,
+        "eventname": "",
+        "glide": "",
+        "name": "Earthquake in Tonga",
+        "description": "Earthquake in Tonga",
+        "url": {
+          "geometry": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=EQ&eventid=1568610&episodeid=1736704",
+          "report": "https://www.gdacs.org/report.aspx?eventid=1568610&episodeid=1736704&eventtype=EQ",
+          "details": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=EQ&eventid=1568610"
+        },
+        "alertlevel": "Green",
+        "alertscore": 1,
+        "episodealertlevel": "Green",
+        "episodealertscore": 0.0,
+        "istemporary": "false",
+        "iscurrent": "true",
+        "country": "Tonga",
+        "fromdate": "2026-09-29T12:40:35",
+        "todate": "2026-09-29T12:40:35",
+        "datemodified": "2026-09-29T13:06:43",
+        "iso3": "TON",
+        "source": "NEIC",
+        "sourceid": "",
+        "polygonlabel": "Centroid",
+        "Class": "Point_Centroid",
+        "affectedcountries": [
+          {
+            "iso2": "TO",
+            "iso3": "TON",
+            "countryname": "Tonga"
+          }
+        ],
+        "severitydata": {
+          "severity": 5.4,
+          "severitytext": "Magnitude 5.4M, Depth:10km",
+          "severityunit": "M"
+        }
+      }
+    }
+  ]
+}

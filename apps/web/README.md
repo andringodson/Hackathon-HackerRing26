@@ -36,30 +36,14 @@ switch language (EN, TA, HI) and theme in the top bar, open `/dashboard` for the
 
 ## Deploy
 
-The app is server-rendered (every page is dynamic), so it needs a Node server, not a static host.
-It ships as one Docker image (`Dockerfile`, Next.js standalone output) that runs on any
-container host. No host-specific code.
+See the [root README](../../README.md#deploy) for the whole stack. Web-specific points:
 
-```bash
-docker build -t disasterintel-web \
-  --build-arg NEXT_PUBLIC_API_URL=https://your-api.example.com .   # omit for demo data
-docker run -p 3000:3000 disasterintel-web
-```
-
-`NEXT_PUBLIC_*` values are baked in at build time, so changing the API URL means rebuilding. The
-container listens on `$PORT` (default 3000). The `web image` GitHub Action builds and smoke-tests the
-image on every push that touches `apps/web`.
-
-| Host | Free tier | How |
-|---|---|---|
-| Render | Yes, sleeps after 15 min idle | New > Blueprint, pick this repo (`render.yaml` at the root) |
-| Koyeb | One free service | New service > GitHub, builder Dockerfile, work directory `apps/web` |
-| Google Cloud Run | Monthly free quota | `gcloud run deploy --source apps/web` |
-| Any VM (Oracle Cloud Always Free) | Yes | `docker build` and `docker run` as above |
-
-The FastAPI backend, Postgres/PostGIS and Redis (brief section 6.4) deploy the same way, as their own
-containers or managed services. Point `NEXT_PUBLIC_API_URL` at the API's public URL and allow the
-site's origin in the API's CORS settings.
+- Every page is server-rendered, so this needs a Node server, not a static host. `Dockerfile` builds
+  a Next.js standalone image that listens on `$PORT` (default 3000).
+- Deployments build with `NEXT_PUBLIC_API_URL=/backend`. The browser then calls this app's own proxy
+  (`src/app/backend/[...path]/route.ts`), which forwards to `API_URL`. `API_URL` is read per request,
+  so the same image can point at any backend without a rebuild, and the API needs no CORS setup.
+- An image built without `NEXT_PUBLIC_API_URL` runs on demo data.
 
 ## What exists
 
@@ -156,9 +140,9 @@ Recipes:
   and set `available: true`.
 - **Add a detail tab:** add the id to `DETAIL_TABS` in `lib/roles.ts`, a `TabsContent` in
   `EventDetail`, and a `detail.tabs.<id>` message.
-- **Replace the demo data:** set `NEXT_PUBLIC_API_URL`. `lib/api/events.ts` calls `GET /api/events`
-  and `GET /api/events/{id}`. Swap the hand-written `types/` for OpenAPI-generated ones when the
-  backend has a schema.
+- **Replace the demo data:** run the API (`apps/api`) and set `NEXT_PUBLIC_API_URL` (see
+  `.env.example`). `lib/api/events.ts` calls `GET /api/events` and `GET /api/events/{id}`. The API
+  publishes its OpenAPI schema at `/openapi.json`; the hand-written `types/` can be generated from it.
 
 ## Decisions that differ from the design doc
 
