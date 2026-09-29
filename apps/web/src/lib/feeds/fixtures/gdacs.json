@@ -1,0 +1,145 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -164.2,
+          20.5
+        ]
+      },
+      "properties": {
+        "eventtype": "TC",
+        "eventid": 1001321,
+        "name": "Tropical Cyclone NOLO-26",
+        "description": "Tropical Cyclone NOLO-26",
+        "alertlevel": "Green",
+        "country": "United States",
+        "fromdate": "2026-09-13T21:00:00",
+        "datemodified": "2026-09-29T16:22:22",
+        "severitydata": {
+          "severity": 249.9984,
+          "severitytext": "Hurricane/Typhoon > 74 mph (maximum wind speed of 250 km/h)",
+          "severityunit": "km/h"
+        },
+        "url": {
+          "report": "https://www.gdacs.org/report.aspx?eventid=1001321&episodeid=36&eventtype=TC"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -47.3,
+          24.2
+        ]
+      },
+      "properties": {
+        "eventtype": "TC",
+        "eventid": 1001323,
+        "name": "Tropical Cyclone FAY-26",
+        "description": "Tropical Cyclone FAY-26",
+        "alertlevel": "Green",
+        "country": "",
+        "fromdate": "2026-09-19T15:00:00",
+        "datemodified": "2026-09-29T15:09:32",
+        "severitydata": {
+          "severity": 111.1104,
+          "severitytext": "Tropical Depression (maximum wind speed of 111 km/h)",
+          "severityunit": "km/h"
+        },
+        "url": {
+          "report": "https://www.gdacs.org/report.aspx?eventid=1001323&episodeid=38&eventtype=TC"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.8573,
+          8.3926
+        ]
+      },
+      "properties": {
+        "eventtype": "FL",
+        "eventid": 1104178,
+        "name": "Flood in Guinea",
+        "description": "Flood in Guinea",
+        "alertlevel": "Green",
+        "country": "Guinea",
+        "fromdate": "2026-09-18T01:00:00",
+        "datemodified": "2026-09-28T09:24:44",
+        "severitydata": {
+          "severity": 0.0,
+          "severitytext": "Magnitude 0 ",
+          "severityunit": ""
+        },
+        "url": {
+          "report": "https://www.gdacs.org/report.aspx?eventid=1104178&episodeid=4&eventtype=FL"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          131.7376,
+          -14.0124
+        ]
+      },
+      "properties": {
+        "eventtype": "WF",
+        "eventid": 1032262,
+        "name": "Forest fires in Australia",
+        "description": "Forest fires in Australia",
+        "alertlevel": "Green",
+        "country": "Australia",
+        "fromdate": "2026-09-18T00:00:00",
+        "datemodified": "2026-09-29T15:16:40",
+        "severitydata": {
+          "severity": 32010.0,
+          "severitytext": "Green impact for forestfire in 32010 ha",
+          "severityunit": "ha"
+        },
+        "url": {
+          "report": "https://www.gdacs.org/report.aspx?eventid=1032262&episodeid=25&eventtype=WF"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.0495,
+          -8.7834
+        ]
+      },
+      "properties": {
+        "eventtype": "EQ",
+        "eventid": 1568636,
+        "name": "Earthquake in Indonesia",
+        "description": "Earthquake in Indonesia",
+        "alertlevel": "Green",
+        "country": "Indonesia",
+        "fromdate": "2026-09-29T14:14:06",
+        "datemodified": "2026-09-29T15:18:43",
+        "severitydata": {
+          "severity": 5.0,
+          "severitytext": "Magnitude 5M, Depth:157.801km",
+          "severityunit": "M"
+        },
+        "url": {
+          "report": "https://www.gdacs.org/report.aspx?eventid=1568636&episodeid=1736735&eventtype=EQ"
+        }
+      }
+    }
+  ]
+}

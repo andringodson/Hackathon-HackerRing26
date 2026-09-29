@@ -1,6 +1,7 @@
 import type { DisasterEvent, EventFilters } from "@/types/event";
-import { USE_MOCKS } from "@/lib/env";
+import { DATA_SOURCE } from "@/lib/env";
 import { filterEvents, sortNewestFirst } from "@/lib/events";
+import { loadFeedEvents } from "@/lib/feeds";
 import { createMockEvents } from "@/lib/mock/events";
 import { apiFetch } from "@/lib/api/client";
 
@@ -15,14 +16,17 @@ export const eventKeys = {
 const MOCK_LATENCY_MS = 150;
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-/** GET /api/events, newest first. */
+/** Events for the filters, newest first: from the feeds, the demo set, or GET /api/events. */
 export async function fetchEvents(
   filters: EventFilters,
   signal?: AbortSignal,
 ): Promise<DisasterEvent[]> {
-  if (USE_MOCKS) {
+  if (DATA_SOURCE === "demo") {
     await sleep(MOCK_LATENCY_MS);
     return sortNewestFirst(filterEvents(createMockEvents(), filters));
+  }
+  if (DATA_SOURCE === "feeds") {
+    return sortNewestFirst(filterEvents(await loadFeedEvents(), filters));
   }
 
   const params = new URLSearchParams({ range: filters.timeRange });
@@ -33,11 +37,12 @@ export async function fetchEvents(
   return apiFetch<DisasterEvent[]>(`/api/events?${params}`, { signal });
 }
 
-/** GET /api/events/{id}. */
+/** One event by id: from the feeds, the demo set, or GET /api/events/{id}. */
 export async function fetchEvent(id: string, signal?: AbortSignal): Promise<DisasterEvent> {
-  if (USE_MOCKS) {
-    await sleep(MOCK_LATENCY_MS);
-    const event = createMockEvents().find((e) => e.id === id);
+  if (DATA_SOURCE !== "api") {
+    if (DATA_SOURCE === "demo") await sleep(MOCK_LATENCY_MS);
+    const events = DATA_SOURCE === "demo" ? createMockEvents() : await loadFeedEvents();
+    const event = events.find((e) => e.id === id);
     if (!event) throw new Error(`Event ${id} not found`);
     return event;
   }

@@ -17,9 +17,11 @@ npm install
 npm run dev          # http://localhost:3000
 ```
 
-It runs on **built-in demo data** with no backend, and the status strip says "Demo data" instead of
-"Live" so nobody mistakes it for real events. To use a real API, copy `.env.example` to `.env.local`
-and set `NEXT_PUBLIC_API_URL`.
+It shows **real events with no backend**: `lib/feeds` reads the public USGS (earthquakes) and GDACS
+(cyclones, floods, wildfires) feeds straight from the browser, once a minute, and filters them on the
+client. Both allow any origin, need no key and are free. For the built-in sample events instead
+(offline work, screenshots), set `NEXT_PUBLIC_DATA_SOURCE=demo`; the status strip then says "Demo
+data". Tests always use the sample events. A backend plugs in later through `NEXT_PUBLIC_API_URL`.
 
 | Script | What it does |
 |---|---|
@@ -135,7 +137,10 @@ Recipes:
   and set `available: true`.
 - **Add a detail tab:** add the id to `DETAIL_TABS` in `lib/roles.ts`, a `TabsContent` in
   `EventDetail`, and a `detail.tabs.<id>` message.
-- **Replace the demo data:** set `NEXT_PUBLIC_API_URL`. `lib/api/events.ts` calls `GET /api/events`
+- **Add a live feed:** write a `load*()` that returns `DisasterEvent[]` in `lib/feeds/`, add it to
+  `FEEDS` in `lib/feeds/index.ts`, and add a fixture test. The source must allow browser requests
+  (CORS).
+- **Switch to a backend:** set `NEXT_PUBLIC_API_URL`. `lib/api/events.ts` then calls `GET /api/events`
   and `GET /api/events/{id}`. Swap the hand-written `types/` for OpenAPI-generated ones when the
   backend has a schema.
 

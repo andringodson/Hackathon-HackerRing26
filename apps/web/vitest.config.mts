@@ -12,5 +12,7 @@ export default defineConfig({
     setupFiles: ["./src/test/setup.ts"],
     include: ["src/**/*.test.{ts,tsx}"],
     css: false,
+    // Sample data, so no test reaches the live feeds.
+    env: { NEXT_PUBLIC_DATA_SOURCE: "demo" },
   },
 });

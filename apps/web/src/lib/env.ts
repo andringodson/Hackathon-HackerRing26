@@ -9,5 +9,19 @@ export const env = {
     process.env.NEXT_PUBLIC_MAP_STYLE_URL || "https://tiles.openfreemap.org/styles/dark",
 } as const;
 
-/** With no API configured the app runs on built-in demo data and says so in the UI. */
-export const USE_MOCKS = env.apiUrl === "";
+/**
+ * Where events come from:
+ * - "api": the DisasterIntel backend at NEXT_PUBLIC_API_URL, once it exists.
+ * - "feeds" (default): public USGS and GDACS feeds read straight from the browser (lib/feeds).
+ * - "demo": built-in sample events. Set NEXT_PUBLIC_DATA_SOURCE=demo; tests use it.
+ */
+export type DataSource = "api" | "feeds" | "demo";
+
+export const DATA_SOURCE: DataSource = env.apiUrl
+  ? "api"
+  : process.env.NEXT_PUBLIC_DATA_SOURCE === "demo"
+    ? "demo"
+    : "feeds";
+
+/** Sample data is on screen, and the UI says so. */
+export const USE_MOCKS = DATA_SOURCE === "demo";
