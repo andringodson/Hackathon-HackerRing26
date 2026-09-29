@@ -6,6 +6,7 @@ import { useShallow } from "zustand/react/shallow";
 import { AgentDrawer } from "@/components/agents/AgentDrawer";
 import { MapProvider } from "@/components/map/MapProvider";
 import { MapControls } from "@/components/map/MapControls";
+import { MapCredits } from "@/components/map/MapCredits";
 import { TimeSlider } from "@/components/map/TimeSlider";
 import { BootScreen } from "@/components/shell/BootScreen";
 import { CommandPalette } from "@/components/shell/CommandPalette";
@@ -92,6 +93,7 @@ function Shell() {
         <MapCanvas />
       </main>
       <MapControls />
+      <MapCredits />
       <TimeSlider />
       <StatusStrip />
       <LeftSidebar />

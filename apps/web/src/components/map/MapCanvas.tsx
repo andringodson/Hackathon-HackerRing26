@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { MapLayers } from "@/components/map/layers/MapLayers";
 import { bindStoresToMap } from "@/components/map/storeSync";
 import { useRegisterMap } from "@/hooks/useMapInstance";
-import { env } from "@/lib/env";
+import { env, OWN_MAP_CREDITS } from "@/lib/env";
 import { DEFAULT_BOUNDS } from "@/lib/geo";
 import { applyBasemapTweaks } from "@/lib/map/style";
 import { useMapStore } from "@/store/map.store";
@@ -59,14 +59,17 @@ export function MapCanvas() {
     let disposed = false;
     instance.once("load", () => {
       if (disposed) return;
-      // The attribution is a licence requirement for OpenStreetMap data, so it stays, but as a
-      // small (i) button at every width so it never collides with the status strip. MapLibre
-      // starts a compact control expanded until the first interaction, so collapse it now. It is
-      // added here, not in the constructor, so the expanded state is never on screen.
-      instance.addControl(new AttributionControl({ compact: true }), "bottom-right");
-      const attribution = container.querySelector(".maplibregl-ctrl-attrib");
-      attribution?.removeAttribute("open");
-      attribution?.classList.remove("maplibregl-compact-show");
+      // The attribution is a licence requirement for OpenStreetMap data. The default basemap's
+      // credits live in MapCredits, above the map UI. A custom style gets MapLibre's control as a
+      // small (i) button; MapLibre starts a compact control expanded until the first interaction,
+      // so collapse it now. It is added here, not in the constructor, so the expanded state is
+      // never on screen.
+      if (!OWN_MAP_CREDITS) {
+        instance.addControl(new AttributionControl({ compact: true }), "bottom-right");
+        const attribution = container.querySelector(".maplibregl-ctrl-attrib");
+        attribution?.removeAttribute("open");
+        attribution?.classList.remove("maplibregl-compact-show");
+      }
       applyBasemapTweaks(instance, useMapStore.getState().layers);
       unbind = bindStoresToMap(instance);
       register(instance);

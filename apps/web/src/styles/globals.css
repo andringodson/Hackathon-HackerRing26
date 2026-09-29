@@ -435,8 +435,8 @@ html.live-cursor
 }
 
 /*
- * MapLibre overrides. The attribution control is a licence requirement for OpenStreetMap-based
- * tiles, so it stays. It is kept inside the visible map area by the layout insets.
+ * MapLibre overrides. The bottom-right control corner (a custom style's attribution) is kept
+ * inside the visible map area by the layout insets.
  */
 .maplibregl-map {
   font-family: inherit;
@@ -458,18 +458,5 @@ html.live-cursor
   margin: 0;
 }
 
-.maplibregl-ctrl.maplibregl-ctrl-attrib {
-  background-color: var(--bg-map-overlay);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text-secondary);
-}
-
-.maplibregl-ctrl-attrib a {
-  color: var(--text-primary);
-}
-
-:root:not([data-theme="light"]) .maplibregl-ctrl-attrib-button {
-  filter: invert(1);
-}
+/* With the default basemap the credits are the app's own (components/map/MapCredits.tsx). A custom
+   style keeps MapLibre's compact attribution control in its stock look, in the same corner. */

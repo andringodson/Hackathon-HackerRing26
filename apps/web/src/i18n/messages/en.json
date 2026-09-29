@@ -119,7 +119,15 @@
     "layers": "Layers",
     "layersTitle": "Map layers",
     "filters": "Filters",
-    "soon": "Soon"
+    "soon": "Soon",
+    "credits": {
+      "label": "Map and data credits",
+      "title": "Credits",
+      "mapData": "Map data",
+      "tiles": "Map tiles",
+      "events": "Event data",
+      "places": "Place search"
+    }
   },
   "layers": {
     "events": "Events",
