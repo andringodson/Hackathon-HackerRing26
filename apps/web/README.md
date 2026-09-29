@@ -49,8 +49,13 @@ Phase F1 (shell) is done. Slices of F2 and F3 are in so the shell has something 
 - **Live cursor:** `shell/LiveCursor` replaces the mouse pointer with the logo's arcs orbiting the
   hotspot and a radar ping; it locks on over clickable things and gives way to the I-beam in text
   fields. Mouse and pen only; reduced motion stops the spin and ping.
-- **Events:** live feed with filters (time range, hazard, severity), severity-coded markers, hover
-  sync between list and map, fly-to with sidebar-aware padding, selection dims other markers.
+- **Events:** live feed with filters (time range, hazard, severity), hover sync between list and
+  map, fly-to with sidebar-aware padding.
+- **Markers** (`map/layers/EventsLayer`, `lib/map/markers`): one silhouette per hazard (quake disc
+  with epicentre ring, flood drop, cyclone spiral, fire triangle, landslide diamond) in the severity
+  colour with a severity-weighted outline; clusters below zoom 6 with the count and the worst
+  severity as a ring (click to zoom in); a cyan target ring on hover and selection, the rest fade;
+  a radar pulse on quakes under 30 minutes old. The live cursor locks on over markers too.
 - **Detail panel:** header (severity, official vs advisory, confidence with source count), Overview
   and Sources tabs. Public users get four tabs, responders six.
 - **Routes:** `/` and `/dashboard` are the map. Every other route in design doc section 7 exists as a
@@ -72,7 +77,7 @@ Stubs are typed, listed here, and marked `TODO(Fn)` in the code. Phases are from
 | `agents/AgentGraph`, `LogStream`, `detail/tabs/AlertTab`, `TraceTab`, auth, `/login`, `/admin/*` | F6 | **`/dashboard` has no auth yet** |
 | `sidebar/BottomSheet` (draggable snap points), `←` `→` between events, Playwright | F7 | |
 | URL state (`lib/url-state.ts` parses and serializes, but is not wired to the address bar) | F2 | |
-| Markers: per-hazard shapes, clustering, pulse, dashed unverified outline | F2 | Markers are severity-coloured circles for now |
+| Markers: dashed outline for unverified events | F6 | Unverified events are drawn faint for now; they only exist once there is a verification pipeline |
 | Virtualized feed, "Load more" | F2 | |
 
 Not installed yet, add when you build the phase that needs it:

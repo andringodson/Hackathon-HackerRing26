@@ -53,6 +53,22 @@ describe("eventsToGeoJSON", () => {
     expect(quake?.properties.outline).toBe(SEVERITY_OUTLINE.critical);
   });
 
+  it("carries the marker image and the severity rank for clusters", () => {
+    const quake = collection.features.find((f) => f.properties.id === "demo-quake-assam");
+    expect(quake?.properties.icon).toBe("marker-earthquake-critical");
+    expect(quake?.properties.rank).toBe(4);
+  });
+
+  it("marks quakes under 30 minutes old as fresh, but never ongoing hazards", () => {
+    const [quake] = events.filter((e) => e.type === "earthquake");
+    const [flood] = events.filter((e) => e.type === "flood");
+    const at = Date.parse(quake.occurredAt);
+    const props = (now: number, e = quake) => eventsToGeoJSON([e], now).features[0].properties;
+    expect(props(at + 10 * 60_000).fresh).toBe(true);
+    expect(props(at + 40 * 60_000).fresh).toBe(false);
+    expect(props(Date.parse(flood.occurredAt), flood).fresh).toBe(false);
+  });
+
   it("keeps marker sizes in a sane range, and bigger for worse events", () => {
     const radii = collection.features.map((f) => f.properties.radius);
     expect(Math.min(...radii)).toBeGreaterThanOrEqual(6);

@@ -23,6 +23,8 @@ const INTERACTIVE = [
   '[role="menuitem"]',
   '[role="menuitemradio"]',
   '[role="menuitemcheckbox"]',
+  // Set by canvas layers while the pointer is over something clickable, e.g. a map marker.
+  "[data-cursor-target]",
 ].join(",");
 
 /** Where the native text cursor is more precise; the live cursor steps aside there. */
@@ -54,13 +56,6 @@ export function LiveCursor() {
       frame = 0;
       el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
     };
-    const onMove = (event: PointerEvent) => {
-      if (event.pointerType === "touch") return;
-      x = event.clientX;
-      y = event.clientY;
-      el.dataset.visible = "true";
-      if (!frame) frame = requestAnimationFrame(paint);
-    };
     const onOver = (event: PointerEvent) => {
       const target = event.target instanceof Element ? event.target : null;
       el.dataset.state = target?.closest(TEXT_ENTRY)
@@ -68,6 +63,15 @@ export function LiveCursor() {
         : target?.closest(INTERACTIVE)
           ? "target"
           : "idle";
+    };
+    const onMove = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
+      x = event.clientX;
+      y = event.clientY;
+      el.dataset.visible = "true";
+      // Also on every move: on a canvas the target element never changes, only its attributes.
+      onOver(event);
+      if (!frame) frame = requestAnimationFrame(paint);
     };
     const onDown = () => {
       el.dataset.pressed = "true";

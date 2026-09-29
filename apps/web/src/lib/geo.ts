@@ -1,4 +1,6 @@
 import type { DisasterEvent } from "@/types/event";
+import { ONGOING_HAZARDS } from "@/lib/hazards";
+import { markerImageId } from "@/lib/map/markers";
 import { SEVERITY_OUTLINE, SEVERITY_RANK } from "@/lib/severity";
 
 /** [west, south, east, north] in degrees. */
@@ -52,7 +54,15 @@ export interface EventFeatureProps {
   /** Outline weight in px. */
   outline: number;
   unverified: boolean;
+  /** SEVERITY_RANK, so a cluster can show its worst severity. */
+  rank: number;
+  /** Marker image: hazard shape in the severity colour (lib/map/markers.ts). */
+  icon: string;
+  /** A quake or landslide under 30 minutes old: gets a radar pulse (design doc 4.3). */
+  fresh: boolean;
 }
+
+const FRESH_MS = 30 * 60_000;
 
 /** Marker size: severity sets the base, earthquake magnitude adds to it. */
 function markerRadius(event: DisasterEvent) {
@@ -64,6 +74,7 @@ function markerRadius(event: DisasterEvent) {
 /** The shape MapLibre's GeoJSON source expects. Markers are drawn by a layer, not DOM nodes. */
 export function eventsToGeoJSON(
   events: DisasterEvent[],
+  now: number = Date.now(),
 ): GeoJSON.FeatureCollection<GeoJSON.Point, EventFeatureProps> {
   return {
     type: "FeatureCollection",
@@ -77,6 +88,11 @@ export function eventsToGeoJSON(
         radius: markerRadius(event),
         outline: SEVERITY_OUTLINE[event.severity],
         unverified: event.status === "unverified",
+        rank: SEVERITY_RANK[event.severity],
+        icon: markerImageId(event.type, event.severity),
+        fresh:
+          !ONGOING_HAZARDS.has(event.type) &&
+          now - new Date(event.occurredAt).getTime() < FRESH_MS,
       },
     })),
   };
