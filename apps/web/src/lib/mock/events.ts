@@ -1,0 +1,231 @@
+import type { DisasterEvent, EventSource } from "@/types/event";
+
+/*
+ * DEMO DATA, not real events. It lets the UI be built and shown before the backend exists, and is
+ * used only while NEXT_PUBLIC_API_URL is empty (the status strip says "Demo data" in that mode).
+ *
+ * Source names are deliberately generic: fake events must never be attributed to a real agency.
+ */
+
+const MIN = 60_000;
+const HOUR = 3_600_000;
+
+/** Fixed at load so demo events age naturally ("2 min ago" becomes "5 min ago") while the page stays open. */
+const LOADED_AT = Date.now();
+
+function sample(id: string, name: string, kind: EventSource["kind"], at: number, agreement = 0.9): EventSource {
+  return {
+    id,
+    name,
+    kind,
+    reliability: kind === "official" || kind === "sensor" ? 0.95 : kind === "news" ? 0.7 : 0.5,
+    agreement,
+    reportedAt: new Date(at).toISOString(),
+  };
+}
+
+export function createMockEvents(now: number = LOADED_AT): DisasterEvent[] {
+  const ago = (ms: number) => new Date(now - ms).toISOString();
+  const at = (ms: number) => now - ms;
+
+  return [
+    {
+      id: "demo-quake-assam",
+      type: "earthquake",
+      title: "M6.2 Earthquake",
+      place: "Assam, India",
+      severity: "critical",
+      confidence: 0.92,
+      confidenceReasoning: "Four independent sources agree on time, location and magnitude.",
+      sourceCount: 4,
+      status: "verified",
+      occurredAt: ago(2 * MIN),
+      updatedAt: ago(1 * MIN),
+      location: { lat: 26.14, lng: 92.93 },
+      magnitude: 6.2,
+      official: null,
+      summary:
+        "A strong earthquake was recorded in central Assam. Buildings may be damaged and aftershocks are likely.",
+      guidance: [
+        "Drop, cover and hold on if you feel shaking.",
+        "Stay away from damaged buildings, bridges and power lines.",
+        "Expect aftershocks. Do not go back inside until it is safe.",
+      ],
+      impact: { peopleExposed: 1_200_000, hospitalsInZone: 14, sheltersNearby: 9 },
+      sources: [
+        sample("s1", "Seismic network (sample)", "sensor", at(2 * MIN), 0.97),
+        sample("s2", "Regional bulletin (sample)", "official", at(90_000), 0.94),
+        sample("s3", "News wire (sample)", "news", at(60_000), 0.81),
+        sample("s4", "Citizen reports (sample)", "citizen", at(45_000), 0.72),
+      ],
+    },
+    {
+      id: "demo-flood-kerala",
+      type: "flood",
+      title: "Flood",
+      place: "Alappuzha, Kerala",
+      severity: "high",
+      confidence: 0.81,
+      confidenceReasoning: "Rainfall data and six reports agree. Water level is still being confirmed.",
+      sourceCount: 6,
+      status: "verified",
+      occurredAt: ago(14 * MIN),
+      updatedAt: ago(9 * MIN),
+      location: { lat: 9.49, lng: 76.33 },
+      official: null,
+      summary: "Heavy rain has flooded low-lying areas near the backwaters. Roads are cut in several places.",
+      guidance: [
+        "Move to higher ground if water is rising near you.",
+        "Do not walk or drive through flood water.",
+        "Keep phones charged and documents in a waterproof bag.",
+      ],
+      impact: { peopleExposed: 240_000, hospitalsInZone: 5, sheltersNearby: 12 },
+      sources: [
+        sample("s1", "Rainfall gauges (sample)", "sensor", at(20 * MIN), 0.9),
+        sample("s2", "News wire (sample)", "news", at(15 * MIN), 0.8),
+        sample("s3", "Citizen reports (sample)", "citizen", at(10 * MIN), 0.75),
+      ],
+    },
+    {
+      id: "demo-cyclone-bob",
+      type: "cyclone",
+      title: "Cyclone",
+      place: "Bay of Bengal",
+      severity: "high",
+      confidence: 0.88,
+      confidenceReasoning: "Relayed from an official bulletin and matched by satellite tracks.",
+      sourceCount: 5,
+      status: "verified",
+      occurredAt: ago(38 * MIN),
+      updatedAt: ago(20 * MIN),
+      location: { lat: 14.5, lng: 86.5 },
+      official: { authority: "Sample Met Dept" },
+      summary: "A cyclonic storm is strengthening over the Bay of Bengal and moving towards the coast.",
+      guidance: [
+        "Follow the official bulletin for your coast.",
+        "Fishing boats should return to harbour.",
+        "Secure loose objects and know where your nearest shelter is.",
+      ],
+      impact: { peopleExposed: 3_100_000, hospitalsInZone: 41, sheltersNearby: 60 },
+      sources: [
+        sample("s1", "Met bulletin (sample)", "official", at(40 * MIN), 0.96),
+        sample("s2", "Satellite tracks (sample)", "sensor", at(30 * MIN), 0.9),
+      ],
+    },
+    {
+      id: "demo-fire-uttarakhand",
+      type: "wildfire",
+      title: "Forest fire",
+      place: "Uttarakhand, India",
+      severity: "moderate",
+      confidence: 0.74,
+      sourceCount: 3,
+      status: "verified",
+      occurredAt: ago(70 * MIN),
+      updatedAt: ago(35 * MIN),
+      location: { lat: 30.07, lng: 79.02 },
+      official: null,
+      summary: "Satellite heat detections show an active fire on a forested slope. Smoke may reach nearby villages.",
+      guidance: [
+        "Avoid the area and follow local instructions.",
+        "If smoke reaches you, stay indoors and close windows.",
+      ],
+      impact: { peopleExposed: 18_000, hospitalsInZone: 1, sheltersNearby: 3 },
+      sources: [
+        sample("s1", "Satellite heat detections (sample)", "sensor", at(75 * MIN), 0.85),
+        sample("s2", "Local news (sample)", "news", at(50 * MIN), 0.6),
+      ],
+    },
+    {
+      id: "demo-landslide-wayanad",
+      type: "landslide",
+      title: "Landslide",
+      place: "Wayanad, Kerala",
+      severity: "moderate",
+      confidence: 0.69,
+      sourceCount: 3,
+      status: "verified",
+      occurredAt: ago(3 * HOUR),
+      updatedAt: ago(2 * HOUR),
+      location: { lat: 11.68, lng: 76.13 },
+      official: null,
+      summary: "A hillside has slipped after heavy rain. A road is blocked.",
+      guidance: ["Stay away from steep slopes and streams.", "Use another route. Do not try to cross debris."],
+      impact: { peopleExposed: 6_500, hospitalsInZone: 0, sheltersNearby: 2 },
+      sources: [sample("s1", "Citizen reports (sample)", "citizen", at(3 * HOUR), 0.7)],
+    },
+    {
+      id: "demo-flood-chennai",
+      type: "flood",
+      title: "Waterlogging",
+      place: "Chennai, Tamil Nadu",
+      severity: "low",
+      confidence: 0.63,
+      sourceCount: 2,
+      status: "verified",
+      occurredAt: ago(5 * HOUR),
+      updatedAt: ago(4 * HOUR),
+      location: { lat: 13.08, lng: 80.27 },
+      official: null,
+      summary: "Some streets have standing water after rain. Traffic is slow.",
+      guidance: ["Avoid low underpasses.", "Allow extra travel time."],
+      impact: { peopleExposed: 90_000, hospitalsInZone: 3, sheltersNearby: 4 },
+      sources: [sample("s1", "Citizen reports (sample)", "citizen", at(5 * HOUR), 0.65)],
+    },
+    {
+      id: "demo-quake-andaman",
+      type: "earthquake",
+      title: "M4.3 Earthquake",
+      place: "Andaman Islands",
+      severity: "info",
+      confidence: 0.95,
+      sourceCount: 3,
+      status: "verified",
+      occurredAt: ago(9 * HOUR),
+      updatedAt: ago(9 * HOUR),
+      location: { lat: 11.9, lng: 92.9 },
+      magnitude: 4.3,
+      official: null,
+      summary: "A light earthquake was recorded offshore. No damage is expected.",
+      guidance: ["No action needed. Be ready for small aftershocks."],
+      impact: { peopleExposed: 4_000, hospitalsInZone: 0, sheltersNearby: 1 },
+      sources: [sample("s1", "Seismic network (sample)", "sensor", at(9 * HOUR), 0.98)],
+    },
+    {
+      id: "demo-landslide-idukki",
+      type: "landslide",
+      title: "Possible landslide",
+      place: "Idukki, Kerala",
+      severity: "moderate",
+      confidence: 0.45,
+      confidenceReasoning: "Only one unconfirmed report so far. Waiting for more sources.",
+      sourceCount: 1,
+      status: "unverified",
+      occurredAt: ago(20 * MIN),
+      updatedAt: ago(20 * MIN),
+      location: { lat: 9.85, lng: 76.97 },
+      official: null,
+      summary: "A single citizen report of a slope failure. Not yet checked against other sources.",
+      sources: [sample("s1", "Citizen report (sample)", "citizen", at(20 * MIN), 0.4)],
+    },
+    {
+      id: "demo-quake-nepal",
+      type: "earthquake",
+      title: "M5.1 Earthquake",
+      place: "Nepal–India border",
+      severity: "high",
+      confidence: 0.9,
+      sourceCount: 4,
+      status: "verified",
+      occurredAt: ago(3 * 24 * HOUR),
+      updatedAt: ago(3 * 24 * HOUR),
+      location: { lat: 28.5, lng: 84.1 },
+      magnitude: 5.1,
+      official: null,
+      summary: "A moderate earthquake was felt across the border region. Minor damage was reported.",
+      guidance: ["Check your home for cracks before going back inside."],
+      impact: { peopleExposed: 800_000, hospitalsInZone: 8, sheltersNearby: 5 },
+      sources: [sample("s1", "Seismic network (sample)", "sensor", at(3 * 24 * HOUR), 0.95)],
+    },
+  ];
+}

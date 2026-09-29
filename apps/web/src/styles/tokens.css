@@ -1,0 +1,66 @@
+/*
+ * Design tokens. Source of truth: frontend-design-doc.md section 5.1.
+ *
+ * Dark is the default palette; `data-theme="light"` on <html> switches it. The attribute is
+ * set before first paint by the inline script in app/layout.tsx (lib/theme.ts).
+ *
+ * The --sev-* hexes are duplicated in lib/severity.ts because MapLibre cannot read CSS
+ * variables. tokens.test.ts fails if the two drift apart.
+ */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --bg-map-overlay: rgba(11, 18, 32, 0.82); /* floating bars, used with backdrop-blur */
+  --bg-panel: #0f1729; /* sidebars */
+  --bg-elevated: #16213a; /* cards, hover */
+  --border: #22304f;
+
+  /* Text */
+  --text-primary: #e6ecf7;
+  --text-secondary: #93a1bd;
+  /* ~3.6:1 on --bg-panel, below WCAG AA for body text. Placeholders and disabled states only. */
+  --text-muted: #62708c;
+
+  /* Accent */
+  --accent: #22d3ee;
+  --on-accent: #04212b; /* text on an --accent fill, 9.2:1 */
+
+  /* Severity (same in both themes) */
+  --sev-critical: #ef4444;
+  --sev-high: #f97316;
+  --sev-moderate: #eab308;
+  --sev-low: #22c55e;
+  --sev-info: #3b82f6;
+
+  /* Shape and elevation */
+  --shadow-float: 0 4px 24px rgb(0 0 0 / 0.35);
+
+  /* Layout insets: how much of each map edge is covered by a sidebar, rail or the agent drawer.
+     AppShell overrides these from the open panels (and zeroes them on phones), so floating UI (top
+     bar, map controls, status strip, map attribution) stays inside the visible map area. Sidebars
+     overlay the map instead of resizing it. */
+  --inset-left: 0px;
+  --inset-right: 0px;
+  --inset-bottom: 0px;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg-map-overlay: rgba(255, 255, 255, 0.85);
+  --bg-panel: #ffffff;
+  --bg-elevated: #f3f5f9;
+  --border: #dde3ee;
+
+  --text-primary: #0f1729;
+  --text-secondary: #475270;
+  --text-muted: #7a86a3; /* ~3.6:1 on white, same restriction as dark */
+
+  /* Not in the design doc: the dark-theme cyan is 1.8:1 on white, too weak for the 2px focus ring
+     the doc requires. This one is 5.4:1. */
+  --accent: #0e7490;
+  --on-accent: #ffffff;
+
+  --shadow-float: 0 4px 24px rgb(15 23 41 / 0.12);
+}

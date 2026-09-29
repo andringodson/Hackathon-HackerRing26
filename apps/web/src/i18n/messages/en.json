@@ -1,0 +1,177 @@
+{
+  "app": {
+    "name": "DisasterIntel"
+  },
+  "topbar": {
+    "toggleEvents": "Toggle events panel",
+    "searchPlaceholder": "Search place",
+    "searchLabel": "Search for a place",
+    "settings": "Settings",
+    "theme": "Theme",
+    "themeDark": "Dark",
+    "themeLight": "Light",
+    "language": "Language",
+    "account": "Account",
+    "signIn": "Sign in",
+    "publicMap": "Public map",
+    "dashboard": "Dashboard",
+    "agents": "Agents"
+  },
+  "sidebar": {
+    "events": "Events",
+    "filters": "Filters",
+    "savedAreas": "Saved areas",
+    "collapse": "Collapse panel",
+    "expand": "Expand panel"
+  },
+  "filters": {
+    "timeRange": "Time range",
+    "hazard": "Hazard type",
+    "severity": "Severity",
+    "clear": "Clear filters",
+    "range": {
+      "1h": "1h",
+      "6h": "6h",
+      "24h": "24h",
+      "7d": "7d"
+    }
+  },
+  "hazard": {
+    "earthquake": "Earthquake",
+    "flood": "Flood",
+    "cyclone": "Cyclone",
+    "wildfire": "Wildfire",
+    "landslide": "Landslide"
+  },
+  "severity": {
+    "critical": "Critical",
+    "high": "High",
+    "moderate": "Moderate",
+    "low": "Low",
+    "info": "Info"
+  },
+  "feed": {
+    "count": "{count, plural, one {# event} other {# events}}",
+    "empty": "No active events in this area",
+    "checkedAt": "Last checked {time}",
+    "error": "Can't reach the server. Showing last known data.",
+    "retry": "Retry",
+    "confidence": "Confidence {value}"
+  },
+  "detail": {
+    "label": "Event detail",
+    "empty": "Select an event on the map or in the list to see details.",
+    "close": "Close event detail",
+    "confidence": "Confidence",
+    "sourcesVerified": "{count, plural, one {# source verified} other {# sources verified}}",
+    "official": "Official · {authority}",
+    "advisory": "Advisory · Verified by DisasterIntel",
+    "unverified": "Unverified",
+    "loadError": "Can't load this event.",
+    "tabs": {
+      "overview": "Overview",
+      "forecast": "Forecast",
+      "resources": "Resources",
+      "sources": "Sources",
+      "alert": "Alert",
+      "trace": "Agent trace"
+    },
+    "overview": {
+      "whatToDo": "What should I do?",
+      "impact": "Estimated impact",
+      "peopleExposed": "People exposed",
+      "hospitals": "Hospitals in zone",
+      "shelters": "Shelters nearby"
+    },
+    "sources": {
+      "reliability": "Reliability",
+      "agreement": "Agreement",
+      "stale": "This source has stopped updating",
+      "none": "No source details yet."
+    },
+    "notBuilt": "This tab is not built yet. It arrives in phase {phase}."
+  },
+  "map": {
+    "label": "Disaster map",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "locate": "Show my location",
+    "layers": "Layers",
+    "layersTitle": "Map layers",
+    "filters": "Filters",
+    "soon": "Soon"
+  },
+  "layers": {
+    "events": "Events",
+    "forecast": "Forecast",
+    "population": "Population density",
+    "resources": "Shelters and hospitals",
+    "satellite": "Satellite imagery",
+    "weather": "Rainfall and wind",
+    "roads": "Roads and routes"
+  },
+  "status": {
+    "critical": "{count} Critical",
+    "active": "{count} Active",
+    "live": "Live",
+    "demo": "Demo data",
+    "updated": "Updated {time}",
+    "demoHint": "Showing sample events. Set NEXT_PUBLIC_API_URL to use a real backend."
+  },
+  "agents": {
+    "title": "Agent activity",
+    "close": "Close agent activity",
+    "toggle": "Toggle agent activity",
+    "pipeline": "Pipeline",
+    "log": "Live log",
+    "notBuilt": "The live agent graph and log arrive in phase F6.",
+    "idle": "Idle",
+    "names": {
+      "ingest": "Ingest",
+      "verify": "Verify",
+      "geo": "Geo",
+      "risk": "Risk",
+      "resource": "Resource",
+      "alert": "Alert",
+      "brief": "Brief"
+    }
+  },
+  "pages": {
+    "backToMap": "Back to the map",
+    "phase": "Planned for phase {phase}",
+    "report": {
+      "title": "Report an incident",
+      "description": "Send a photo, a location and a short note. Reports are checked before they appear."
+    },
+    "login": {
+      "title": "Sign in",
+      "description": "Sign-in for responders and administrators."
+    },
+    "analytics": {
+      "title": "Analytics",
+      "description": "Charts and history of past events, response times and the false-alarm rate."
+    },
+    "reports": {
+      "title": "Reports",
+      "description": "Situation reports (SITREPs) and PDFs."
+    },
+    "adminSources": {
+      "title": "Data sources",
+      "description": "Turn feeds on and off and see how reliable each one is."
+    },
+    "adminUsers": {
+      "title": "Users",
+      "description": "Manage responder and admin accounts."
+    },
+    "adminSettings": {
+      "title": "Settings",
+      "description": "Platform configuration."
+    }
+  },
+  "errors": {
+    "title": "Something went wrong",
+    "retry": "Try again",
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "That page does not exist."
+  }
+}

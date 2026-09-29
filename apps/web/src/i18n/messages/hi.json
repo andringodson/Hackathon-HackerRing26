@@ -1,0 +1,177 @@
+{
+  "app": {
+    "name": "DisasterIntel"
+  },
+  "topbar": {
+    "toggleEvents": "घटनाएँ पैनल खोलें या बंद करें",
+    "searchPlaceholder": "स्थान खोजें",
+    "searchLabel": "किसी स्थान को खोजें",
+    "settings": "सेटिंग्स",
+    "theme": "थीम",
+    "themeDark": "डार्क",
+    "themeLight": "लाइट",
+    "language": "भाषा",
+    "account": "खाता",
+    "signIn": "साइन इन करें",
+    "publicMap": "सार्वजनिक मानचित्र",
+    "dashboard": "डैशबोर्ड",
+    "agents": "एजेंट"
+  },
+  "sidebar": {
+    "events": "घटनाएँ",
+    "filters": "फ़िल्टर",
+    "savedAreas": "सहेजे गए क्षेत्र",
+    "collapse": "पैनल छोटा करें",
+    "expand": "पैनल बड़ा करें"
+  },
+  "filters": {
+    "timeRange": "समय सीमा",
+    "hazard": "आपदा का प्रकार",
+    "severity": "गंभीरता",
+    "clear": "फ़िल्टर हटाएँ",
+    "range": {
+      "1h": "1 घं",
+      "6h": "6 घं",
+      "24h": "24 घं",
+      "7d": "7 दिन"
+    }
+  },
+  "hazard": {
+    "earthquake": "भूकंप",
+    "flood": "बाढ़",
+    "cyclone": "चक्रवात",
+    "wildfire": "जंगल की आग",
+    "landslide": "भूस्खलन"
+  },
+  "severity": {
+    "critical": "अति गंभीर",
+    "high": "उच्च",
+    "moderate": "मध्यम",
+    "low": "निम्न",
+    "info": "सूचना"
+  },
+  "feed": {
+    "count": "{count, plural, one {# घटना} other {# घटनाएँ}}",
+    "empty": "इस क्षेत्र में कोई सक्रिय घटना नहीं है",
+    "checkedAt": "अंतिम जाँच: {time}",
+    "error": "सर्वर तक पहुँच नहीं हो पा रही है। पिछला उपलब्ध डेटा दिखाया जा रहा है।",
+    "retry": "फिर कोशिश करें",
+    "confidence": "विश्वसनीयता {value}"
+  },
+  "detail": {
+    "label": "घटना का विवरण",
+    "empty": "विवरण देखने के लिए मानचित्र या सूची में कोई घटना चुनें।",
+    "close": "घटना विवरण बंद करें",
+    "confidence": "विश्वसनीयता",
+    "sourcesVerified": "{count, plural, one {# स्रोत से पुष्टि हुई} other {# स्रोतों से पुष्टि हुई}}",
+    "official": "आधिकारिक · {authority}",
+    "advisory": "परामर्श · DisasterIntel द्वारा सत्यापित",
+    "unverified": "असत्यापित",
+    "loadError": "यह घटना लोड नहीं हो सकी।",
+    "tabs": {
+      "overview": "सारांश",
+      "forecast": "पूर्वानुमान",
+      "resources": "संसाधन",
+      "sources": "स्रोत",
+      "alert": "अलर्ट",
+      "trace": "एजेंट ट्रेस"
+    },
+    "overview": {
+      "whatToDo": "मुझे क्या करना चाहिए?",
+      "impact": "अनुमानित प्रभाव",
+      "peopleExposed": "प्रभावित हो सकने वाले लोग",
+      "hospitals": "क्षेत्र में अस्पताल",
+      "shelters": "पास के आश्रय स्थल"
+    },
+    "sources": {
+      "reliability": "विश्वसनीयता",
+      "agreement": "सहमति",
+      "stale": "इस स्रोत ने अपडेट होना बंद कर दिया है",
+      "none": "अभी स्रोत का विवरण उपलब्ध नहीं है।"
+    },
+    "notBuilt": "यह टैब अभी बना नहीं है। यह {phase} चरण में आएगा।"
+  },
+  "map": {
+    "label": "आपदा मानचित्र",
+    "zoomIn": "ज़ूम इन",
+    "zoomOut": "ज़ूम आउट",
+    "locate": "मेरा स्थान दिखाएँ",
+    "layers": "परतें",
+    "layersTitle": "मानचित्र परतें",
+    "filters": "फ़िल्टर",
+    "soon": "जल्द आ रहा है"
+  },
+  "layers": {
+    "events": "घटनाएँ",
+    "forecast": "पूर्वानुमान",
+    "population": "जनसंख्या घनत्व",
+    "resources": "आश्रय स्थल और अस्पताल",
+    "satellite": "उपग्रह चित्र",
+    "weather": "वर्षा और हवा",
+    "roads": "सड़कें और मार्ग"
+  },
+  "status": {
+    "critical": "{count} अति गंभीर",
+    "active": "{count} सक्रिय",
+    "live": "लाइव",
+    "demo": "डेमो डेटा",
+    "updated": "अपडेट: {time}",
+    "demoHint": "नमूना घटनाएँ दिखाई जा रही हैं। असली बैकएंड के लिए NEXT_PUBLIC_API_URL सेट करें।"
+  },
+  "agents": {
+    "title": "एजेंट गतिविधि",
+    "close": "एजेंट गतिविधि बंद करें",
+    "toggle": "एजेंट गतिविधि खोलें या बंद करें",
+    "pipeline": "पाइपलाइन",
+    "log": "लाइव लॉग",
+    "notBuilt": "लाइव एजेंट ग्राफ़ और लॉग F6 चरण में आएँगे।",
+    "idle": "निष्क्रिय",
+    "names": {
+      "ingest": "इनजेस्ट",
+      "verify": "सत्यापन",
+      "geo": "भू-स्थान",
+      "risk": "जोखिम",
+      "resource": "संसाधन",
+      "alert": "अलर्ट",
+      "brief": "सारांश"
+    }
+  },
+  "pages": {
+    "backToMap": "मानचित्र पर वापस जाएँ",
+    "phase": "{phase} चरण के लिए नियोजित",
+    "report": {
+      "title": "घटना की रिपोर्ट करें",
+      "description": "फ़ोटो, स्थान और एक छोटा नोट भेजें। रिपोर्ट दिखने से पहले जाँची जाती हैं।"
+    },
+    "login": {
+      "title": "साइन इन करें",
+      "description": "रेस्पॉन्डर और एडमिन के लिए साइन-इन।"
+    },
+    "analytics": {
+      "title": "विश्लेषण",
+      "description": "पिछली घटनाओं, प्रतिक्रिया समय और झूठे अलर्ट की दर के चार्ट।"
+    },
+    "reports": {
+      "title": "रिपोर्ट",
+      "description": "स्थिति रिपोर्ट (SITREP) और PDF।"
+    },
+    "adminSources": {
+      "title": "डेटा स्रोत",
+      "description": "फ़ीड चालू या बंद करें और हर स्रोत की विश्वसनीयता देखें।"
+    },
+    "adminUsers": {
+      "title": "उपयोगकर्ता",
+      "description": "रेस्पॉन्डर और एडमिन खाते प्रबंधित करें।"
+    },
+    "adminSettings": {
+      "title": "सेटिंग्स",
+      "description": "प्लेटफ़ॉर्म का कॉन्फ़िगरेशन।"
+    }
+  },
+  "errors": {
+    "title": "कुछ गड़बड़ हो गई",
+    "retry": "फिर कोशिश करें",
+    "notFoundTitle": "पृष्ठ नहीं मिला",
+    "notFoundBody": "यह पृष्ठ मौजूद नहीं है।"
+  }
+}
