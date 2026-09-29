@@ -1,13 +1,18 @@
 # What is left to implement
 
-Snapshot of `andringodson/Hackathon-HackerRing26` at `911abc2` (14 commits, 2026-09-29), measured
+Snapshot of `andringodson/Hackathon-HackerRing26` at `5630a9a` (16 commits, 2026-09-29), measured
 against `frontend-design-doc.md` (phases F1 to F7) and `disaster-intel-project-brief 2.md`.
 
 **How this was scanned.** By cloning the repo and reading the diff since the scaffold commit
 (`6f14419`), the new feeds and API code, the README, the `.env.example`, the sidebar and feed
-components, and every `TODO(Fn)` marker (30 markers in 29 files). The app was **not** built and the
-tests were **not** run on this version, and `BootScreen`, `LiveCursor` and the CSS were not read in
-detail. Run `npm run check` before trusting the "done" column.
+components, the event header, Overview tab and deep-link hook, and every `TODO(Fn)` marker (29
+markers in 28 files). The app was **not** built and the tests were **not** run on this version.
+`BootScreen`, `LiveCursor`, the CSS, `EventsLayer` and `lib/map/markers.ts` were not read in detail;
+the marker behaviour below is as the README describes it. Run `npm run check` before trusting the
+"done" column.
+
+This document was first written at `911abc2` and updated for `27cd4a7` (map markers) and `5630a9a`
+(event detail), which had landed by the time the PR was checked.
 
 Paths below are relative to `apps/web/` unless they start with `apps/api` or `.github`.
 
@@ -20,6 +25,10 @@ were all built (`0783759`, `dd3bb79`, `6f52f5b`, `f2cc426`) and then **reverted*
 of them is on `main`, but the whole backend is recoverable: `git show dd3bb79` has `apps/api` (FastAPI
 app, USGS and GDACS sources, database layer, ingest, tests).
 
+The **frontend is deployed on Vercel** (project `disasterintel`, root directory `apps/web`): every push
+to `main` goes to Production and each branch or PR gets a Preview. This is configured in Vercel, not
+in the repo (there is no `vercel.json`), so it is easy to miss.
+
 Built since the scaffold:
 
 - **Real events with no backend.** `lib/feeds` reads USGS (earthquakes, M2.5+, past week) and GDACS
@@ -31,6 +40,15 @@ Built since the scaffold:
 - **Events sidebar redesign.** Count badge on the rail, live dot, new-row highlight, per-severity
   counts on the filter chips, "Show last 7 days" empty state.
 - **Better time logic.** `activityTime` so a quake revised by USGS days later does not look new.
+- **Hazard markers** (`27cd4a7`, per the README). One silhouette per hazard (quake disc with epicentre
+  ring, flood drop, cyclone spiral, fire triangle, landslide diamond) in the severity colour;
+  clusters below zoom 6 with a count and the worst severity as a ring; a target ring on hover and
+  selection; a radar pulse on quakes under 30 minutes old.
+- **Event detail** (`5630a9a`). Header actions (copy link, copy coordinates, open source), a "Key
+  facts" list (magnitude, when, last update, location), and the label no longer claims verification:
+  it reads "Advisory" and "N sources".
+- **Deep links.** `?event={id}` selects the event on load and flies to it, and follows selection
+  afterwards (`hooks/useSelectionUrl.ts`).
 
 ---
 
@@ -39,8 +57,8 @@ Built since the scaffold:
 | Phase | Status | Summary |
 |---|---|---|
 | F1 Shell | **Done** | Layout, sidebars, rail, controls, themes, EN/TA/HI, shortcuts, restyled |
-| F2 Events | **Mostly done** | Real feeds, feed, filters, markers, fly-to. Left: URL state, search, marker shapes and clustering, virtualization |
-| F3 Detail | **Partial** | Header, Overview, Sources done. Resources and Population not started. Real events have no guidance or impact |
+| F2 Events | **Mostly done** | Real feeds, feed, filters, hazard markers with clusters, fly-to, `?event=` deep links. Left: place search, the rest of the URL state, virtualization |
+| F3 Detail | **Partial** | Header (with actions), Overview (with key facts), Sources done. Resources and Population not started. Real events have no guidance or impact |
 | F4 Live and forecast | Not started | No WebSocket, no toasts, no stale banner, no forecast |
 | F5 Public tools | Not started | No report flow, no "Near me", no PWA or offline, Tamil/Hindi fonts missing |
 | F6 Responder tools | Not started | No auth (`/dashboard` is open), no alert composer, agent graph or admin pages |
@@ -54,7 +72,7 @@ Design doc section 16 checklist:
 | Sidebars open and close smoothly and remember state | Done (left panel is remembered) |
 | Every severity has colour, icon and text | Done |
 | Every event shows confidence and source count | Done, but the numbers are constants (see 3.3) |
-| Selected event shareable via URL | **Not done** (parser exists, unused) |
+| Selected event shareable via URL | Done (`?event=`); layers, time and viewport are not in the URL yet |
 | Works on a 360px phone | Done (checked at 375px on the scaffold, not since the redesign) |
 | Works offline with cached data and a stale banner | **Not done** |
 | All controls keyboard accessible | Partial (markers are not; the feed is the alternative) |
@@ -67,16 +85,18 @@ Design doc section 16 checklist:
 
 Small changes with the biggest effect on whether the demo can be trusted.
 
-- [ ] **3.1 Wrong label on every real event.** Both parsers set `official: null`, so the detail panel
-  shows **"Advisory · Verified by DisasterIntel"** on USGS and GDACS events. Nothing has been verified
-  by DisasterIntel; each event has exactly one source. Set `official: { authority: "USGS" }` in
-  `lib/feeds/usgs.ts` and `{ authority: "GDACS" }` in `lib/feeds/gdacs.ts` (the brief says to label
-  official relays with attribution), and reword `detail.advisory` in `i18n/messages/{en,ta,hi}.json`
-  so it does not claim verification until a verification step exists.
-- [ ] **3.2 No "What should I do?" for real events.** The feeds set no `guidance` or `impact`, so the
-  Overview tab shows one summary line. The design doc says every event answers what happened, where,
-  how sure, and what to do. Add hazard-and-severity guidance templates (short, plain language, in all
-  three languages, reviewed by someone qualified) and show them for feed events.
+- [ ] **3.1 Name the authority on relayed events.** The worst part of this is already fixed: the
+  detail panel used to read "Advisory · Verified by DisasterIntel" on every USGS and GDACS event,
+  which claimed a verification that never happens. `5630a9a` changed it to "Advisory" and "N
+  sources". What is left is smaller: both parsers still set `official: null`, so a USGS or GDACS event
+  never reads "Official · USGS" or "Official · GDACS". The brief says official relays carry their
+  authority. Set `official: { authority: "USGS" }` in `lib/feeds/usgs.ts` and
+  `{ authority: "GDACS" }` in `lib/feeds/gdacs.ts`.
+- [ ] **3.2 No "What should I do?" for real events.** The feeds set no `guidance` or `impact`. Since
+  `5630a9a` the Overview tab shows a summary line and a "Key facts" list, so the panel is no longer
+  bare, but it still does not say what to do. The design doc says every event answers what happened,
+  where, how sure, and what to do. Add hazard-and-severity guidance templates (short, plain language,
+  in all three languages, reviewed by someone qualified) and show them for feed events.
 - [ ] **3.3 Confidence is hard-coded.** USGS is 0.95 (reviewed) or 0.8, GDACS is 0.85, and
   `sourceCount` is always 1. That is honest as a stop-gap (the reasoning text says "single source"),
   but it is not the cross-source score the brief describes. See 5.
@@ -94,15 +114,14 @@ Small changes with the biggest effect on whether the demo can be trusted.
 
 ### F2 Events
 
-- [ ] **URL state.** `lib/url-state.ts` parses and serializes `?event=&layers=&t=&lat=&lng=&z=` and has
-  tests, but nothing uses it. Wire it to the stores and the address bar; deep links must select the
-  event and restore the view.
+- [ ] **Rest of the URL state.** `?event=` is wired (`hooks/useSelectionUrl.ts`). Still open:
+  layers, forecast time and viewport (`?layers=&t=&lat=&lng=&z=`). The parser and serializer in
+  `lib/url-state.ts` already handle them and have tests; wire them to the stores and the address bar
+  so a shared link restores the whole view.
 - [ ] **Place search.** `components/shell/LocationSearch.tsx` is an input only. Geocode with Nominatim
   (1 request per second on the public server: debounce and cache) and fly to the result.
-- [ ] **Marker language.** `components/map/layers/EventsLayer.tsx` draws severity-coloured circles.
-  Still to do: a distinct shape per hazard (ring for quake, triangle for fire, diamond for landslide),
-  clustering with a count and the worst severity, a one-time pulse for events under 30 minutes old,
-  and a dashed outline for unverified events.
+- [ ] **Dashed outline for unverified events.** The rest of the marker language is done (see 1).
+  Unverified events are drawn faint for now, which only matters once something produces them (F6).
 - [ ] **Feed scale.** Virtualize `LiveFeed` with `@tanstack/react-virtual` and add "Load more". A
   worldwide feed can be hundreds of rows.
 - [ ] **Keyboard.** `←` and `→` for previous and next event (`hooks/useKeyboardShortcuts.ts`).
@@ -186,7 +205,8 @@ Small changes with the biggest effect on whether the demo can be trusted.
 
 ## 5. Backend and platform (project brief)
 
-Nothing here exists on `main`. "Reverted" means it existed in `dd3bb79` and can be recovered.
+Nothing here exists on `main`, apart from frontend hosting (last rows). "Reverted" means it existed in
+`dd3bb79` and can be recovered.
 
 | Area | State |
 |---|---|
@@ -203,7 +223,9 @@ Nothing here exists on `main`. "Reverted" means it existed in `dd3bb79` and can 
 | Auth (FastAPI-Users or Keycloak) | Not built |
 | Prompt-injection protection for social text | Not built |
 | Observability (Prometheus, Grafana, GlitchTip, Langfuse) | Not built |
-| CI (GitHub Actions), Docker, hosted deploy | Reverted; `main` has no `.github`, no Dockerfile |
+| CI (GitHub Actions) and Docker | Reverted; `main` has no `.github` and no Dockerfile. Nothing runs the tests or `npm run check` on a push |
+| Backend hosting (Render, Neon) | Reverted; nothing hosts an API |
+| Frontend hosting | **Done, outside the repo:** Vercel project `disasterintel` (root `apps/web`), Production from `main`, a Preview per branch or PR |
 | Evals on past disasters, success metrics | Not built |
 | OpenAPI-generated types replacing `types/*.ts` | Waiting on a backend schema |
 
@@ -213,7 +235,10 @@ Nothing here exists on `main`. "Reverted" means it existed in `dd3bb79` and can 
 
 1. **Browser-only or backend?** The revert removed the backend. Choose deliberately: browser-only is
    fast to demo but cannot verify, deduplicate, alert or hold secrets.
-2. **Where does it deploy?** Hosting was tried (Render, Neon, Docker) and reverted. Nothing is deployed.
+2. **Where does a backend run?** The frontend is already on Vercel. Render and Neon were tried for
+   the backend and reverted, so nothing hosts an API. The brief notes that Vercel Hobby is
+   non-commercial, so check its terms before relying on it beyond the hackathon. Also decide whether
+   to bring back CI: today a broken push deploys to Production without any check.
 3. **OLED black instead of the doc's navy.** Update the design doc and tokens to match, and re-check
    contrast (3 above).
 4. **Live cursor.** It replaces the system pointer. Decide whether that is acceptable for a
@@ -227,9 +252,9 @@ Nothing here exists on `main`. "Reverted" means it existed in `dd3bb79` and can 
 
 ## 7. Suggested order
 
-1. Section 3: the label fix (3.1), guidance templates (3.2), region default (3.4), `npm run check`
-   (3.5). Half a day, and the demo stops overclaiming.
-2. Demo polish: URL deep links, place search, marker shapes and clustering.
+1. Section 3: name the authority on relayed events (3.1), guidance templates (3.2), region default
+   (3.4), `npm run check` (3.5). Half a day, and the detail panel finally says what to do.
+2. Demo polish: place search, the rest of the URL state (layers, viewport, time), a virtualized feed.
 3. Toasts and the stale-data banner (they need no backend).
 4. Pick **one** headline feature: the public report flow, or the responder alert composer. Both need a
    backend, so decide on section 6.1 first; recovering `dd3bb79` is the fastest start.
