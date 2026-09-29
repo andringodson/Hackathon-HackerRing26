@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { FILTER_CHIP_ATTR, SEARCH_INPUT_ID } from "@/lib/dom";
+import { FILTER_CHIP_ATTR } from "@/lib/dom";
 import { canSeeAgentTools } from "@/lib/roles";
 import { useRole } from "@/components/shell/RoleProvider";
 import { clearSelection } from "@/store/actions";
@@ -19,6 +19,14 @@ export function useKeyboardShortcuts() {
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      // Ctrl/Cmd+K toggles the command palette from anywhere, even while typing.
+      if ((event.ctrlKey || event.metaKey) && !event.altKey && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        const ui = useUiStore.getState();
+        ui.setCommandOpen(!ui.commandOpen);
+        return;
+      }
+
       // Radix calls preventDefault when Esc closes one of its own layers (menus, popovers), so
       // this also stops one Esc press from closing a menu and deselecting the event.
       if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey) return;
@@ -44,7 +52,7 @@ export function useKeyboardShortcuts() {
           break;
         case "/":
           event.preventDefault();
-          document.getElementById(SEARCH_INPUT_ID)?.focus();
+          ui.setCommandOpen(true);
           break;
         case "l":
         case "L":

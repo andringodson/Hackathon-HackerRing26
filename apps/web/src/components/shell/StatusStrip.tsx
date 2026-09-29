@@ -1,13 +1,18 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import { Crosshair } from "lucide-react";
+import type { MapMouseEvent } from "maplibre-gl";
 import { useLocale, useTranslations } from "next-intl";
 import { SeverityIcon } from "@/components/events/SeverityBadge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useLiveEvents } from "@/hooks/useLiveEvents";
+import { useMapInstance } from "@/hooks/useMapInstance";
 import { useNow } from "@/hooks/useNow";
 import { USE_MOCKS } from "@/lib/env";
 import { countBySeverity } from "@/lib/events";
 import { formatRelativeTime } from "@/lib/formatters";
+import { formatCoordinates } from "@/lib/geo";
 import { cn } from "@/lib/utils";
 
 // Never wraps, and a touch smaller on phones so both pills fit beside the attribution button at 360px.
@@ -29,8 +34,7 @@ export function StatusStrip() {
 
   const counts = countBySeverity(data ?? []);
   const active = counts.high + counts.moderate + counts.low;
-  const updated =
-    dataUpdatedAt > 0 ? formatRelativeTime(dataUpdatedAt, locale, now) : null;
+  const updated = dataUpdatedAt > 0 ? formatRelativeTime(dataUpdatedAt, locale, now) : null;
 
   const state = USE_MOCKS ? "demo" : isError ? "stale" : "live";
   const label =
@@ -73,14 +77,65 @@ export function StatusStrip() {
         </span>
       </p>
 
-      {state === "demo" ? (
-        <Tooltip>
-          <TooltipTrigger asChild>{pill}</TooltipTrigger>
-          <TooltipContent side="top">{t("demoHint")}</TooltipContent>
-        </Tooltip>
-      ) : (
-        pill
-      )}
+      <div className="flex items-center gap-2">
+        <CoordinateReadout />
+        {state === "demo" ? (
+          <Tooltip>
+            <TooltipTrigger asChild>{pill}</TooltipTrigger>
+            <TooltipContent side="top">{t("demoHint")}</TooltipContent>
+          </Tooltip>
+        ) : (
+          pill
+        )}
+      </div>
     </div>
+  );
+}
+
+/**
+ * Latitude, longitude and zoom under the pointer (the map centre when the pointer is elsewhere),
+ * like a plotting table. Updates the text node directly from map events, so it never re-renders
+ * React. Decorative for screen readers; hidden on phones and when there is no mouse.
+ */
+function CoordinateReadout() {
+  const map = useMapInstance();
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!map || !el) return;
+    const show = (lng: number, lat: number) => {
+      el.textContent = `${formatCoordinates(lat, lng)} · Z${map.getZoom().toFixed(1)}`;
+    };
+    const onMove = (e: MapMouseEvent) => {
+      const { lng, lat } = e.lngLat.wrap();
+      show(lng, lat);
+    };
+    const onCentre = () => {
+      const { lng, lat } = map.getCenter().wrap();
+      show(lng, lat);
+    };
+    onCentre();
+    map.on("mousemove", onMove);
+    map.on("mouseout", onCentre);
+    map.on("moveend", onCentre);
+    return () => {
+      map.off("mousemove", onMove);
+      map.off("mouseout", onCentre);
+      map.off("moveend", onCentre);
+    };
+  }, [map]);
+
+  return (
+    <p
+      aria-hidden
+      className={cn(
+        PILL,
+        "numeric gap-2 text-muted-foreground max-md:hidden [@media(hover:none)]:hidden",
+      )}
+    >
+      <Crosshair className="size-3.5" />
+      <span ref={ref} className="min-w-[19ch]" />
+    </p>
   );
 }

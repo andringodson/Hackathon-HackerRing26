@@ -4,7 +4,7 @@
   },
   "topbar": {
     "toggleEvents": "घटनाएँ पैनल खोलें या बंद करें",
-    "searchPlaceholder": "स्थान खोजें",
+    "searchPlaceholder": "स्थान, घटनाएँ, क्रियाएँ खोजें",
     "searchLabel": "किसी स्थान को खोजें",
     "settings": "सेटिंग्स",
     "theme": "थीम",
@@ -198,5 +198,24 @@
     "sources": "लाइव स्रोतों से सिंक हो रहा है",
     "demo": "नमूना डेटा लोड हो रहा है",
     "ready": "तैयार"
+  },
+  "command": {
+    "title": "कमांड पैलेट",
+    "placeholder": "स्थान, घटनाएँ और क्रियाएँ खोजें…",
+    "events": "घटनाएँ",
+    "places": "स्थान",
+    "empty": "कोई मेल नहीं",
+    "searching": "स्थान खोजे जा रहे हैं…",
+    "navigate": "चुनें",
+    "open": "खोलें",
+    "close": "बंद करें",
+    "osm": "स्थान © OpenStreetMap",
+    "actionsGroup": "क्रियाएँ",
+    "actions": {
+      "layers": "मानचित्र परतें खोलें",
+      "themeLight": "लाइट थीम पर जाएँ",
+      "themeDark": "डार्क थीम पर जाएँ",
+      "range": "पिछले {range} दिखाएँ"
+    }
   }
 }

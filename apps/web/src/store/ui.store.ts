@@ -17,6 +17,8 @@ interface UiState {
   activeTab: DetailTab;
   agentDrawerOpen: boolean;
   layersOpen: boolean;
+  /** The command palette (Ctrl/Cmd+K, "/" or the top bar search). */
+  commandOpen: boolean;
   theme: Theme;
   /** Kept in step with the viewport width by AppShell. */
   layoutMode: LayoutMode;
@@ -29,6 +31,7 @@ interface UiState {
   setAgentDrawerOpen: (open: boolean) => void;
   toggleAgentDrawer: () => void;
   setLayersOpen: (open: boolean) => void;
+  setCommandOpen: (open: boolean) => void;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
   /** Adopts the theme the inline script already applied, or re-applies it. See useThemeSync. */
@@ -44,6 +47,7 @@ export const useUiStore = create<UiState>()(
       activeTab: "overview",
       agentDrawerOpen: false,
       layersOpen: false,
+      commandOpen: false,
       theme: "dark",
       layoutMode: "desktop",
 
@@ -66,6 +70,7 @@ export const useUiStore = create<UiState>()(
       setAgentDrawerOpen: (agentDrawerOpen) => set({ agentDrawerOpen }),
       toggleAgentDrawer: () => set((s) => ({ agentDrawerOpen: !s.agentDrawerOpen })),
       setLayersOpen: (layersOpen) => set({ layersOpen }),
+      setCommandOpen: (commandOpen) => set({ commandOpen }),
 
       setTheme: (theme) => {
         applyTheme(theme, { persist: true });

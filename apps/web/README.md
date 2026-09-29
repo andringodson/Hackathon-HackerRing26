@@ -49,6 +49,10 @@ Phase F1 (shell) is done. Slices of F2 and F3 are in so the shell has something 
 - **Live cursor:** `shell/LiveCursor` replaces the mouse pointer with the logo's arcs orbiting the
   hotspot and a radar ping; it locks on over clickable things and gives way to the I-beam in text
   fields. Mouse and pen only; reduced motion stops the spin and ping.
+- **Command palette** (`shell/CommandPalette`, Ctrl/Cmd+K, `/`, or the top bar search): live
+  events, places anywhere via OpenStreetMap Nominatim (`lib/geocode.ts`: debounced 400 ms,
+  cached, credited), and actions (panels, layers, theme, time range). Arrow keys, Enter, Esc.
+- **Coordinate readout** in the status strip: latitude, longitude and zoom under the pointer.
 - **Events:** live feed with filters (time range, hazard, severity), hover sync between list and
   map, fly-to with sidebar-aware padding.
 - **Markers** (`map/layers/EventsLayer`, `lib/map/markers`): one silhouette per hazard (quake disc
@@ -72,7 +76,6 @@ Stubs are typed, listed here, and marked `TODO(Fn)` in the code. Phases are from
 | `map/layers/PopulationLayer`, `ResourcesLayer`, `detail/tabs/ResourcesTab` | F3 | |
 | WebSocket updates, toasts (`ToastCenter`), stale-data banner | F4 | Feed polls every 30 s for now |
 | `report/ReportSheet`, `LocationPicker`, `/report` | F5 | |
-| `shell/LocationSearch` | F2 | Input and `/` shortcut work; geocoding does not |
 | PWA, offline, low-bandwidth mode | F5 | |
 | `agents/AgentGraph`, `LogStream`, `detail/tabs/AlertTab`, `TraceTab`, auth, `/login`, `/admin/*` | F6 | **`/dashboard` has no auth yet** |
 | `sidebar/BottomSheet` (draggable snap points), `←` `→` between events, Playwright | F7 | |

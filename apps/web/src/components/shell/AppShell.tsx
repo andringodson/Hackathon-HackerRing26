@@ -8,6 +8,7 @@ import { MapProvider } from "@/components/map/MapProvider";
 import { MapControls } from "@/components/map/MapControls";
 import { TimeSlider } from "@/components/map/TimeSlider";
 import { BootScreen } from "@/components/shell/BootScreen";
+import { CommandPalette } from "@/components/shell/CommandPalette";
 import { RoleProvider, useRole } from "@/components/shell/RoleProvider";
 import { StatusStrip } from "@/components/shell/StatusStrip";
 import { ToastCenter } from "@/components/shell/ToastCenter";
@@ -98,6 +99,7 @@ function Shell() {
       {canSeeAgentTools(role) && <AgentDrawer />}
       <TopBar />
       <ToastCenter />
+      <CommandPalette />
       <BootScreen />
     </div>
   );

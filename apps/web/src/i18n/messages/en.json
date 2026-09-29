@@ -4,7 +4,7 @@
   },
   "topbar": {
     "toggleEvents": "Toggle events panel",
-    "searchPlaceholder": "Search place",
+    "searchPlaceholder": "Search places, events, actions",
     "searchLabel": "Search for a place",
     "settings": "Settings",
     "theme": "Theme",
@@ -198,5 +198,24 @@
     "sources": "Syncing live sources",
     "demo": "Loading sample data",
     "ready": "Ready"
+  },
+  "command": {
+    "title": "Command palette",
+    "placeholder": "Search places, events and actions…",
+    "events": "Events",
+    "places": "Places",
+    "empty": "No matches",
+    "searching": "Searching places…",
+    "navigate": "navigate",
+    "open": "open",
+    "close": "close",
+    "osm": "Places © OpenStreetMap",
+    "actionsGroup": "Actions",
+    "actions": {
+      "layers": "Open map layers",
+      "themeLight": "Switch to light theme",
+      "themeDark": "Switch to dark theme",
+      "range": "Show last {range}"
+    }
   }
 }
