@@ -68,6 +68,42 @@
   box-shadow: var(--shadow-float);
 }
 
+/* Section labels: small caps with wide tracking ("EVENTS · 42"). */
+@utility label-caps {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* Every number (times, counts, coordinates, percentages): monospace with aligned digits. */
+@utility numeric {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Letter spacing pulls Tamil and Devanagari conjuncts apart, and they have no capitals. Unlayered,
+   so it beats the label-caps utility. */
+:lang(ta) .label-caps,
+:lang(hi) .label-caps {
+  letter-spacing: 0;
+  font-size: 11.5px;
+}
+
+@layer base {
+  html {
+    scrollbar-color: var(--border) transparent;
+    scrollbar-width: thin;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--accent) 30%, transparent);
+  }
+}
+
 @layer base {
   * {
     border-color: var(--border);

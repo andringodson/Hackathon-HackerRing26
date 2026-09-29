@@ -45,7 +45,7 @@ export function StatusStrip() {
   const pill = (
     <p
       tabIndex={state === "demo" ? 0 : undefined}
-      className={cn(PILL, "gap-2")}
+      className={cn(PILL, "numeric gap-2")}
       suppressHydrationWarning
     >
       {/* dot plus text: the state is never colour alone */}
@@ -59,7 +59,7 @@ export function StatusStrip() {
 
   return (
     <div className="pointer-events-none fixed right-[calc(var(--inset-right)+56px)] bottom-[calc(var(--inset-bottom)+12px)] left-[calc(var(--inset-left)+12px)] z-10 flex items-center justify-between gap-2 text-xs transition-[left,right,bottom] duration-200 ease-out">
-      <p className={cn(PILL, "gap-3 max-sm:gap-2")}>
+      <p className={cn(PILL, "numeric gap-3 max-sm:gap-2")}>
         <span className="flex items-center gap-1.5">
           <SeverityIcon severity="critical" className="size-3.5" />
           {t("critical", { count: counts.critical })}

@@ -5,7 +5,7 @@ interface ChipProps extends ComponentProps<"button"> {
   pressed: boolean;
 }
 
-/** A toggle chip for filters. State is exposed through aria-pressed, not colour alone. */
+/** A toggle chip for filters: a hairline that turns cyan when on. State is in aria-pressed, not colour alone. */
 function Chip({ pressed, className, type = "button", ...props }: ChipProps) {
   return (
     <button
@@ -13,10 +13,10 @@ function Chip({ pressed, className, type = "button", ...props }: ChipProps) {
       type={type}
       aria-pressed={pressed}
       className={cn(
-        "inline-flex h-8 items-center gap-1.5 rounded-md border px-2.5 text-xs font-medium transition-colors max-md:h-11",
+        "inline-flex h-7 items-center justify-center gap-1.5 rounded-md border px-2.5 text-xs font-medium transition-colors max-md:h-11",
         pressed
-          ? "border-primary bg-primary/15 text-foreground"
-          : "border-border text-muted-foreground hover:bg-accent hover:text-foreground",
+          ? "border-primary/60 bg-primary/10 text-primary"
+          : "border-border text-muted-foreground hover:border-muted-foreground/40 hover:text-foreground",
         className,
       )}
       {...props}

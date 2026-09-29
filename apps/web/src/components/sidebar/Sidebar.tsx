@@ -66,11 +66,25 @@ export function Sidebar({ side, open, width, label, rail, children }: SidebarPro
   );
 }
 
-/** Title row for a panel. Put the collapse or close button in `children`. */
-export function SidebarHeader({ title, children }: { title: string; children?: ReactNode }) {
+/**
+ * Title row for a panel: a small-caps label, optional `meta` beside it (a count, a live dot), and
+ * the collapse or close button in `children`.
+ */
+export function SidebarHeader({
+  title,
+  meta,
+  children,
+}: {
+  title: string;
+  meta?: ReactNode;
+  children?: ReactNode;
+}) {
   return (
-    <div className="flex h-12 shrink-0 items-center justify-between border-b pr-2 pl-4 max-md:h-14">
-      <h2 className="text-base font-semibold">{title}</h2>
+    <div className="flex h-12 shrink-0 items-center justify-between gap-2 border-b pr-2 pl-4 max-md:h-14">
+      <div className="flex min-w-0 items-center gap-2.5">
+        <h2 className="label-caps text-foreground">{title}</h2>
+        {meta}
+      </div>
       {children}
     </div>
   );
